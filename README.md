@@ -15,6 +15,7 @@ The cart implementation should be designed either as class with inheritance (bas
 The tests should cover all methods.
 
 ## Usage
+Both command can be run parallel and do watch your files for changes.
 
 **Start**
 
@@ -26,6 +27,10 @@ The tests should cover all methods.
 
 
 ## Installation
+Install webpack:
+```
+npm install webpack webpack-dev-server -g
+```
 
 Install *KARMA* and [framework adapters](https://npmjs.org/browse/keyword/karma-adapter):
 
