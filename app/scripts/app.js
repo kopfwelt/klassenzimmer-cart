@@ -1,2 +1,2 @@
 const cart = require('../components/cart');
-cart();
+var response = cart();

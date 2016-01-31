@@ -1,5 +1,6 @@
 // Karma configuration
 // Generated on Tue Nov 17 2015 23:22:30 GMT+0100 (CET)
+var karmaWebpack = require('karma-webpack');
 
 module.exports = function(config) {
   config.set({
@@ -9,15 +10,15 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    // frameworks: ['mocha', 'chai', 'sinon'],
+    frameworks: ['mocha', 'chai', 'sinon'],
 
-    plugins: [
-        require('karma-webpack'),
-        'karma-mocha',
-        'karma-chai',
-        'karma-sinon',
-        'karma-firefox-launcher'
-    ],
+    // plugins: [
+    //     require('karma-webpack'),
+    //     // 'karma-mocha',
+    //     // 'karma-chai',
+    //     // 'karma-sinon',
+    //     'karma-firefox-launcher'
+    // ],
 
     // list of files / patterns to load in the browser
     files: [
@@ -27,6 +28,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
+        'npm_modules/**'
     ],
 
     // preprocess matching files before serving them to the browser
@@ -73,28 +75,15 @@ module.exports = function(config) {
     // how many browser should be started simultanous
     concurrency: Infinity,
 
-    browserify: {
-        debug: true,
-        // transform: ['brfs'],
-        // transform: [hbsfy, istanbul({
-        //     ignore: ['**/node_modules/**', '**/test/**'],
-        // })],
-        configure: bundle => {
-            bundle.once('prebundle', () => {
-                bundle.transform([
-                    'babelify',
-                    istanbul({
-                        ignore: ['**/node_modules/**', '**/test/**'],
-                    })]);
-            });
-        }
-    },
-
     // optionally, configure the reporter
     coverageReporter: {
         type: 'html',
         dir: 'reports/coverage/'
     }
+
+    // plugins: [
+    //     require('karma-webpack')
+    // ]
 
   })
 }
