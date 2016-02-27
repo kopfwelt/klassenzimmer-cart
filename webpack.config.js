@@ -1,3 +1,5 @@
+var path = require("path");
+
 module.exports = {
 	entry: [
 		// Set up an ES6-ish environment
@@ -7,7 +9,8 @@ module.exports = {
 		'./app/scripts/app.js'
 	],
 	output: {
-		path: './build/js/',
+		path: path.resolve(__dirname, 'build/js'),
+		publicPath: '/js/',
 		filename: 'bundle.js'
 	},
 	devServer: {

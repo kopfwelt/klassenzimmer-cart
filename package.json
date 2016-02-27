@@ -6,7 +6,7 @@
     "node": ">=0.12.0"
   },
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --inline",
     "build": "webpack",
     "test": "karma start test/unit/karma.conf.js"
   },

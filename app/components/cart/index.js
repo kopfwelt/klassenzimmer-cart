@@ -1,13 +1,14 @@
-let items = [];
+// let items = [];
 
 module.exports = {
 
 	add: item => {
+		const items = [];
 		items.push(item);
-		return items;
+		return 'spsp';
 	},
 
 	clear: () => {
-		items = [];
+		const items = [];
 	}
 };
