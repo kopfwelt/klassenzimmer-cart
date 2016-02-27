@@ -34,7 +34,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'test/unit/**/*.spec.js': ['webpack']
+        'app/**/*.js': ['webpack', 'sourcemap'],
+        'test/unit/**/*.spec.js': ['webpack', 'sourcemap']
     },
 
 
@@ -63,8 +64,8 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    // , 'Chrome'
-    browsers: ['Firefox'],
+    // Firefox, ''
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
@@ -79,6 +80,30 @@ module.exports = function(config) {
     coverageReporter: {
         type: 'html',
         dir: 'reports/coverage/'
+    },
+
+    babelPreprocessor: {
+      options: {
+        presets: ['es2015'],
+        sourceMap: 'inline'
+      },
+      // filename: function (file) {
+      //   return file.originalPath.replace(/\.js$/, '.es5.js');
+      // },
+      sourceFileName: function (file) {
+        return file.originalPath;
+      }
+    },
+    webpack: { //kind of a copy of your webpack config
+      devtool: 'inline-source-map', //just do inline source maps instead of the default
+      module: {
+        loaders: [
+          { test: /\.js$/, loader: 'babel-loader' }
+        ]
+      }
+    },
+    webpackServer: {
+      noInfo: true //please don't spam the console when running in karma!
     }
 
     // plugins: [

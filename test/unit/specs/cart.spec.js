@@ -4,16 +4,16 @@
 // const describe = mocha.describe;
 // const it = mocha.it;
 
-var chai = require('chai');
-var expect = chai.expect;
+const chai = require('chai');
+const expect = chai.expect;
 
-var cart = require('../../../app/components/cart');
+const cart = require('../../../app/components/cart');
 
 describe('Cart', function() {
 	describe('add', function() {
 		it('should add an object to the collection', function() {
-			var response = cart();
-			expect(response).to.be.equal('cart');
+			const response = cart.add('steve');
+			expect(response[0]).to.be.equal('steve');
 		});
 	});
 });
