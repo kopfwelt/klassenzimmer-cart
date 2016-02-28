@@ -1,7 +1,7 @@
 export default class Cart {
 
 	constructor() {
-		this.items = [];
+		this.items = this._read();
 	}
 
 	add(item) {
@@ -16,6 +16,14 @@ export default class Cart {
 
 	clear() {
 		return;
+	}
+
+	_read() {
+		return [];
+	}
+
+	_save() {
+		return true;
 	}
 
 	_contains(item) {
