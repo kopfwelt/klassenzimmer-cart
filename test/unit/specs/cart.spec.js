@@ -23,18 +23,5 @@ describe('Cart', () => {
 			expect(cart.items).to.be.an('array');
 			expect(cart.items.length).to.be.equal(1);
 		});
-		it('should not add an object twice to the collection', () => {
-			const cart = new Cart();
-			cart.add({
-				id: 1,
-				title: 'steve'
-			});
-			cart.add({
-				id: 1,
-				title: 'moin'
-			});
-			expect(cart.items).to.be.an('array');
-			expect(cart.items.length).to.be.equal(1);
-		});
 	});
 });
