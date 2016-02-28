@@ -1,19 +1,40 @@
 /* eslint no-unused-expressions: 0, prefer-reflect: 0, no-undef: 0 */
 
-// const mocha = require('mocha');
-// const describe = mocha.describe;
-// const it = mocha.it;
-
-const chai = require('chai');
+import chai from 'chai';
 const expect = chai.expect;
 
-const cart = require('../../../app/components/cart');
+import Cart from '../../../app/components/cart/src/cart';
 
-describe('Cart', function() {
-	describe('add', function() {
-		it('should add an object to the collection', function() {
-			const response = cart.add('steve');
-			expect(response[0]).to.be.equal('steve');
+describe('Cart', () => {
+	describe('constructor', () => {
+		it('should set items to empty array', () => {
+			const cart = new Cart();
+			expect(cart.items).to.be.an('array');
+			expect(cart.items).to.be.empty;
+		});
+	});
+	describe('add', () => {
+		it('should add an object to the collection', () => {
+			const cart = new Cart();
+			cart.add({
+				id: 1,
+				title: 'steve'
+			});
+			expect(cart.items).to.be.an('array');
+			expect(cart.items.length).to.be.equal(1);
+		});
+		it('should not add an object twice to the collection', () => {
+			const cart = new Cart();
+			cart.add({
+				id: 1,
+				title: 'steve'
+			});
+			cart.add({
+				id: 1,
+				title: 'moin'
+			});
+			expect(cart.items).to.be.an('array');
+			expect(cart.items.length).to.be.equal(1);
 		});
 	});
 });
