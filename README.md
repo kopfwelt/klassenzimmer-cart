@@ -14,6 +14,16 @@ The cart implementation should be designed either as class with inheritance (bas
 
 The tests should cover all methods.
 
+### Articles
+[Closures are not magic](http://renderedtext.com/blog/2015/11/18/closures-are-not-magic/)
+
+[Writing Next Generation Reusable JavaScript Modules in ECMAScript 6](https://www.smashingmagazine.com/2016/02/writing-next-generation-reusable-javascript-modules/)
+
+[ES6 Web Components Part 1 – A Man Without a Framework](http://www.benfarrell.com/2015/10/26/es6-web-components-part-1-a-man-without-a-framework/)
+
+[Unpacking Webpack+](http://blog.tighten.co/unpacking-webpack)
+
+
 ## Usage
 Both command can be run parallel and do watch your files for changes.
 
