@@ -1,15 +1,30 @@
 {
   "name": "klassenzimmer-cart",
+  "description": "Learn writing javascript and tests.",
   "version": "0.0.0",
   "private": true,
   "engines": {
     "node": ">=0.12.0"
   },
+  "keywords": [
+    "es6",
+    "karma",
+    "metrics",
+    "report",
+    "oop"
+  ],
+  "author": {
+    "name": "Steve Sinnwell",
+    "email": "steve@kopfwelt.com",
+    "url": "http://kopfwelt.com/"
+  },
+
   "scripts": {
     "start": "webpack-dev-server --inline",
     "build": "webpack",
     "test": "karma start test/unit/karma.conf.js",
-    "test:once": "karma start test/unit/karma.conf.js --single-run"
+    "test:once": "karma start test/unit/karma.conf.js --single-run",
+    "metrics": "plato -r -d reports/plato app"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

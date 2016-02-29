@@ -35,6 +35,10 @@ Both command can be run parallel and do watch your files for changes.
 
 ```npm test```
 
+**Metrics**
+
+```npm metrics```
+
 
 ## Installation
 Install webpack:
@@ -58,6 +62,20 @@ Install *PhantomJS* via homebrew (or [direct download](http://phantomjs.org)):
 
 ```
 brew update && brew install phantomjs
+```
+
+Install *Plato*:
+
+In case plato is already installed. Remove Plato and install the ES6 fork.
+
+```
+npm uninstall plato
+```
+
+Install the ES6 fork by [deedubs](https://github.com/deedubs/es6-plato):
+
+```
+npm install -g git+https://github.com/deedubs/es6-plato.git
 ```
 
 ## Copyright
