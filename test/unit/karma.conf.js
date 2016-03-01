@@ -36,6 +36,7 @@ module.exports = function (config) {
 		webpack: {
 			module: {
 				loaders: webpackConfig.loaders,
+				devtool: 'inline-source-map',
 				postLoaders: [
 					{
 						test: /\.js$/,

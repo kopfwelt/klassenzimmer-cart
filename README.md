@@ -15,6 +15,7 @@ The cart implementation should be designed either as class with inheritance (bas
 The tests should cover all methods.
 
 ### Articles
+
 [Closures are not magic](http://renderedtext.com/blog/2015/11/18/closures-are-not-magic/)
 
 [Writing Next Generation Reusable JavaScript Modules in ECMAScript 6](https://www.smashingmagazine.com/2016/02/writing-next-generation-reusable-javascript-modules/)
@@ -22,6 +23,11 @@ The tests should cover all methods.
 [ES6 Web Components Part 1 – A Man Without a Framework](http://www.benfarrell.com/2015/10/26/es6-web-components-part-1-a-man-without-a-framework/)
 
 [Unpacking Webpack+](http://blog.tighten.co/unpacking-webpack)
+
+https://addyosmani.com/blog/getting-started-with-progressive-web-apps/
+http://jonathancreamer.com/advanced-webpack-part-1-the-commonschunk-plugin/
+http://blog.codeschool.io/2015/12/02/how-we-built-code-schools-video-player-with-es2015/
+https://github.com/lyzadanger/serviceworker-example/blob/master/03-versioning/serviceWorker.js
 
 
 ## Usage
