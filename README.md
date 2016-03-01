@@ -25,10 +25,20 @@ The tests should cover all methods.
 [Unpacking Webpack+](http://blog.tighten.co/unpacking-webpack)
 
 https://addyosmani.com/blog/getting-started-with-progressive-web-apps/
+
 http://jonathancreamer.com/advanced-webpack-part-1-the-commonschunk-plugin/
+
 http://blog.codeschool.io/2015/12/02/how-we-built-code-schools-video-player-with-es2015/
+
 https://github.com/lyzadanger/serviceworker-example/blob/master/03-versioning/serviceWorker.js
 
+http://www.benfarrell.com/2015/10/26/es6-web-components-part-4-project-setup-and-opinions/
+
+http://dialelo.github.io/talks/functional-programming-and-architecture-in-javascript/
+
+http://dmitrysoshnikov.com/tag/functional-programming/
+
+http://casualjavascript.com/?2
 
 ## Usage
 Both command can be run parallel and do watch your files for changes.
