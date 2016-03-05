@@ -23,11 +23,11 @@ describe('StorageCookie', () => {
 		it('should read a localStorage', () => {
 			localstorage
 				.get('cart')
-				.then((items) => {
+				.then(items => {
 					expect(items).to.be.equal('moin');
-					return this;
-				}.bind(localstorage))
-				.clear();
+					// return this;
+					done();
+				});
 		});
 	});
 });
