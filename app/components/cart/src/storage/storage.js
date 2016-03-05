@@ -3,10 +3,20 @@
  *
  * @interface
  */
-export default class Storage {
+class Storage {
 
+	/**
+	 * Returns a saved string
+	 */
 	get() {}
 
-	set() {}
+	/**
+	 * Saves string
+	 * @param {String} name   Identifier of the saved object
+	 * @param {Object} object Object to be saved serialized
+	 */
+	set(name = '', object = {}) {}
 
 }
+
+export default Storage;

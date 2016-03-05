@@ -3,12 +3,22 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import cart from '../../../../../app/components/cart/src/cart';
+import Cart from '../../../../../app/components/cart/src/cart';
 // import cookie from '../../../../../app/components/cart/src/storage/storage-cookie';
 
 describe('Cart', () => {
+	let cart = null;
+
+	before(() => {
+		cart = new Cart();
+	});
+
+	afterEach(() => {
+		cart.clear();
+	});
+
 	describe('constructor', () => {
-		it('should have empty items array', () => {
+		it('should have an empty items array', () => {
 			expect(cart._items).to.be.an('array');
 			expect(cart._items.length).to.be.equal(0);
 		});
