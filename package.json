@@ -18,13 +18,14 @@
     "email": "steve@kopfwelt.com",
     "url": "http://kopfwelt.com/"
   },
-
   "scripts": {
     "start": "webpack-dev-server --inline",
     "build": "webpack",
+    "all": "npm run test:once;open -g ./reports/coverage/index.html;npm run metrics;open -g ./reports/plato/index.html;npm run doc;open -g ./reports/documentation/esdoc/index.html;open -g ./reports/documentation/jsdoc/index.html",
     "test": "karma start test/unit/karma.conf.js",
     "test:once": "karma start test/unit/karma.conf.js --single-run",
-    "metrics": "plato -r -d reports/plato app"
+    "metrics": "plato -r -d reports/plato -x app/scripts/app.js -l .jshintrc -t \"Klassenzimmer Cart\" app",
+    "doc": "jsdoc -c jsdoc.json; esdoc -c esdoc.json"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -39,6 +40,7 @@
     "fs": "0.0.2",
     "isparta": "^4.0.0",
     "istanbul-instrumenter-loader": "^0.2.0",
+    "jsdoc": "^3.4.0",
     "karma": "^0.13.15",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chai": "^0.1.0",
@@ -52,6 +54,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.24",
     "karma-webpack": "^1.7.0",
+    "minami": "^1.1.1",
     "mocha": "^2.4.5",
     "phantomjs": "^2.1.3",
     "sinon": "^1.17.2",

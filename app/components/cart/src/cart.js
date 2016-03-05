@@ -1,41 +1,67 @@
-export default class Cart {
+class Cart {
 
 	constructor() {
-		this.items = [];
-		this.storage = null;
+		this._items = [];
+		this._options = [];
+		this._storage = this;
 	}
 
 	use(engine) {
-		this.storage = engine;
+		this._storage = engine;
+
 		return this;
 	}
 
 	init(options = {}) {
-		this.items = this._read();
+		this._options = options;
+		// this._items = this._read();
+
 		return this;
 	}
 
-	add(item) {
-		this.items.push(item);
-		this._save();
+	add(item, count) {
+		this._items.push({item, count});
+		// this._save();
 
 		return this;
 	}
 
 	remove(item) {
-		this.items.push(item);
+		this._items.push(item);
 
 		return this;
 	}
 
-	_read() {
-		const items = this.storage.get();
+	clear() {
+		this._items = [];
 
-		return items ? items : [];
+		return this;
 	}
 
+	set() {
+	}
+
+	get() {
+		return this._items ? this._items : [];
+	}
+
+	_read() {
+		const item = this._storage.get('cart');
+		if(!items) {
+			items = [];
+		}
+
+		return items;
+	}
+
+	/**
+	 * [_save description]
+	 * @todo  return promise
+	 */
 	_save() {
-		return this.storage.set(this.items);
+		return this._storage.set('cart', this.items);
 	}
 
 }
+
+export default new Cart();

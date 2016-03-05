@@ -11,17 +11,17 @@ module.exports = function (config) {
 			'node_modules/babel-polyfill/dist/polyfill.js',
 			'test/unit/**/*.spec.js'
 		],
-		plugins: [webpack, 'karma-mocha', 'karma-chai', 'karma-chrome-launcher', 'karma-coverage', 'karma-spec-reporter'],
-		browsers: ['Chrome'],
+		plugins: [webpack, 'karma-mocha', 'karma-chai', 'karma-chrome-launcher', 'karma-phantomjs-launcher', 'karma-coverage', 'karma-spec-reporter', 'karma-sourcemap-loader'],
+		browsers: ['PhantomJS'],
 		preprocessors: {
-			'app/**/*.js': ['webpack'],
-			'test/unit/**/*.spec.js': ['webpack']
+			// 'app/**/*.js': ['sourcemap'],
+			'test/unit/**/*.spec.js': ['webpack','sourcemap']
 		},
 		reporters: ['spec', 'coverage'],
 		coverageReporter: {
-			dir: 'reports/coverage/',
+			dir: 'reports/',
 			reporters: [
-				{type: 'html', subdir: 'report-html'}
+				{type: 'html', subdir:'coverage'}
 			],
 			instrumenters: {isparta},
 			instrumenter: {
@@ -34,9 +34,9 @@ module.exports = function (config) {
 			}
 		},
 		webpack: {
+			devtool: 'inline-source-map',
 			module: {
 				loaders: webpackConfig.loaders,
-				devtool: 'inline-source-map',
 				postLoaders: [
 					{
 						test: /\.js$/,

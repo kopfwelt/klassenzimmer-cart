@@ -3,46 +3,39 @@ import Storage from './storage';
 /**
  * @extends {Storage}
  */
-class StorageCookie extends Storage {
+class StorageLocalStorage extends Storage {
 
 	get(name) {
-		const cookies = this.all();
-
-		if (cookies) {
-			return cookies[name];
-		}
-
-		return null;
+		const promise = new Promise((fulfill, reject) => {
+			const item = localStorage.getItem(name);
+			if (item) {
+				fulfill(item);
+			} else {
+				reject();
+			}
+		});
+		return promise;
 	}
 
 	set(name, value, options = {}) {
-		let str = `${this.encode(name)}=${this.encode(value)}`;
+		const promise = new Promise((fulfill, reject) => {
+			localStorage.setItem(name, value);
+			fulfill();
+		});
+		return promise;
+	}
 
-		if (value === null) {
-			options.expiry = -1;
+	storageAvailable(type) {
+		try {
+			var storage = window[type],
+				x = '__storage_test__';
+			storage.setItem(x, x);
+			storage.removeItem(x);
+			return true;
 		}
-
-		if (options.expiry && !options.expires) {
-			options.expires = new Date(+new Date() + options.expiry);
+		catch(e) {
+			return false;
 		}
-
-		if (options.path) {
-			str += `; path=${options.path}`;
-		}
-
-		if (options.domain) {
-			str += `; domain=${options.domain}`;
-		}
-
-		if (options.expires) {
-			str += `; expires=${options.expires.toUTCString()}`;
-		}
-
-		if (options.secure) {
-			str += '; secure';
-		}
-
-		document.cookie = str;
 	}
 
 	all() {
@@ -83,4 +76,5 @@ class StorageCookie extends Storage {
 	}
 }
 
-export default new StorageCookie();
+export default new StorageLocalStorage();
+

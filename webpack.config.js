@@ -22,7 +22,7 @@ module.exports = {
 		},
 		hot: true
 	},
-	devtool: '#inline-source-map',
+	devtool: 'inline-source-map',
 	loaders: [{
 		loader: 'babel-loader',
 		// Skip any files outside of your project's `src` directory

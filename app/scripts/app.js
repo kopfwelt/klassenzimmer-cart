@@ -1,3 +1,5 @@
+/* esversion: 6 */
+
 import cart from '../components/cart/src/cart';
 import cookie from '../components/cart/src/storage/cookie';
 

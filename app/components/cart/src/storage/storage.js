@@ -1,4 +1,9 @@
-export class Storage {
+/**
+ * Storage interface
+ *
+ * @interface
+ */
+export default class Storage {
 
 	get() {}
 

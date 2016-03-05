@@ -1,0 +1,12 @@
+{
+	"source": {
+	    "include": [ "./app" ],
+	    "includePattern": ".+\\.js(doc)?$",
+	    "excludePattern": "(^|\\/|\\\\)_"
+	},
+	"opts": {
+		"recurse": true,
+		"template": "./node_modules/minami",
+		"destination": "./reports/documentation/jsdoc"
+	}
+}
