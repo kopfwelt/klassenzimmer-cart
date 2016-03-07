@@ -12,7 +12,7 @@ module.exports = function (config) {
 			'test/unit/**/*.spec.js'
 		],
 		plugins: [webpack, 'karma-mocha', 'karma-chai', 'karma-chrome-launcher', 'karma-phantomjs-launcher', 'karma-coverage', 'karma-spec-reporter', 'karma-sourcemap-loader'],
-		browsers: ['PhantomJS'],
+		browsers: ['Chrome'],//PhantomJS
 		preprocessors: {
 			// 'app/**/*.js': ['sourcemap'],
 			'test/unit/**/*.spec.js': ['webpack','sourcemap']

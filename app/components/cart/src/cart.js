@@ -70,7 +70,8 @@ class Cart {
 		return this;
 	}
 
-	set() {
+	set($param) {
+		return $param;
 	}
 
 	get() {

@@ -9,12 +9,15 @@ describe('StorageCookie', () => {
 	describe('set', () => {
 		it('should save to localStorage', () => {
 			localstorage
-				.set('cart', 'moin');
+				.set('cart', {steve:"steve"});
 			localstorage
 				.get('cart')
 				.then(items => {
 					expect(items).to.be.equal('moin');
 					done();
+				})
+				.catch(() => {
+					throw new Error('Can not save to local storage');
 				});
 		});
 	});
@@ -27,6 +30,9 @@ describe('StorageCookie', () => {
 					expect(items).to.be.equal('moin');
 					// return this;
 					done();
+				})
+				.catch(() => {
+					throw new Error('Can not read local storage');
 				});
 		});
 	});

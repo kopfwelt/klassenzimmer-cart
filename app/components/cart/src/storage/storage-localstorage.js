@@ -18,9 +18,14 @@ class StorageLocalStorage extends Storage {
 	}
 
 	set(name, value, options = {}) {
+		const json = JSON.stringify(value);
 		const promise = new Promise((fulfill, reject) => {
-			localStorage.setItem(name, value);
-			fulfill();
+			const success = localStorage.setItem(name, json);
+			if (success) {
+				fulfill();
+			} else {
+				reject();
+			}
 		});
 		return promise;
 	}

@@ -4,7 +4,7 @@ import chai from 'chai';
 const expect = chai.expect;
 
 import Cart from '../../../../../app/components/cart/src/cart';
-// import cookie from '../../../../../app/components/cart/src/storage/storage-cookie';
+// import localstorage from '../../../../../app/components/cart/src/storage/storage-localstorage';
 
 describe('Cart', () => {
 	let cart = null;
@@ -67,5 +67,9 @@ describe('Cart', () => {
 			expect(cart._items).to.be.an('array');
 			expect(cart._items.length).to.be.equal(0);
 		});
+	});
+
+	describe('_save', () => {
+		it('should save a variable to local storage');
 	});
 });
