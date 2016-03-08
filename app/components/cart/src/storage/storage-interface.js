@@ -8,14 +8,14 @@ class Storage {
 	/**
 	 * Returns a saved string
 	 */
-	get() {}
+	read(key) {}
 
 	/**
 	 * Saves string
 	 * @param {String} name   Identifier of the saved object
 	 * @param {Object} object Object to be saved serialized
 	 */
-	set(name = '', object = {}) {}
+	save(key, object = {}) {}
 
 }
 

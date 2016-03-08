@@ -88,6 +88,13 @@ In case plato is already installed. Remove Plato and install the ES6 fork.
 npm uninstall plato
 ```
 
+Install *Documentations*:
+
+
+```
+npm i -g esdoc jsdoc
+```
+
 Install the ES6 fork by [deedubs](https://github.com/deedubs/es6-plato):
 
 ```

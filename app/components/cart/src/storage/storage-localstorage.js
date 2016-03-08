@@ -1,13 +1,13 @@
-import Storage from './storage';
+import StorageInterface from './storage-interface';
 
 /**
  * @extends {Storage}
  */
-class StorageLocalStorage extends Storage {
+class StorageLocalStorage extends StorageInterface {
 
-	get(name) {
+	read(key) {
 		const promise = new Promise((fulfill, reject) => {
-			const item = localStorage.getItem(name);
+			const item = localStorage.getItem(key);
 			if (item) {
 				fulfill(item);
 			} else {
@@ -17,10 +17,10 @@ class StorageLocalStorage extends Storage {
 		return promise;
 	}
 
-	set(name, value, options = {}) {
-		const json = JSON.stringify(value);
+	save(key, object, options = {}) {
+		const json = JSON.stringify(object);
 		const promise = new Promise((fulfill, reject) => {
-			const success = localStorage.setItem(name, json);
+			const success = localStorage.setItem(key, json);
 			if (success) {
 				fulfill();
 			} else {
@@ -40,43 +40,6 @@ class StorageLocalStorage extends Storage {
 		}
 		catch(e) {
 			return false;
-		}
-	}
-
-	all() {
-		return this.parse(document.cookie);
-	}
-
-	parse(str) {
-		// const obj = {};
-		// const pairs = str.split(/ *; */);
-		// const pair;
-
-		// if ('' == pairs[0]) {
-		// 	return obj;
-		// }
-
-		// for (let i = 0; i < pairs.length; ++i) {
-		// 	pair = pairs[i].split('=');
-		// 	obj[this.decode(pair[0])] = this.decode(pair[1]);
-		// }
-
-		// return obj;
-	}
-
-	encode(value) {
-		try {
-			return encodeURIComponent(value);
-		} catch (e) {
-			return null;
-		}
-	}
-
-	decode(value) {
-		try {
-			return decodeURIComponent(value);
-		} catch (e) {
-			return null;
 		}
 	}
 }

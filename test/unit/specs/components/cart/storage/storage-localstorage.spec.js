@@ -6,12 +6,12 @@ const expect = chai.expect;
 import localstorage from '../../../../../../app/components/cart/src/storage/storage-localstorage';
 
 describe('StorageCookie', () => {
-	describe('set', () => {
+	describe('save', () => {
 		it('should save to localStorage', () => {
 			localstorage
-				.set('cart', {steve:"steve"});
+				.save('cart', {steve:"steve"});
 			localstorage
-				.get('cart')
+				.read('cart')
 				.then(items => {
 					expect(items).to.be.equal('moin');
 					done();
@@ -22,10 +22,10 @@ describe('StorageCookie', () => {
 		});
 	});
 
-	describe('get', () => {
+	describe('read', () => {
 		it('should read a localStorage', () => {
 			localstorage
-				.get('cart')
+				.read('cart')
 				.then(items => {
 					expect(items).to.be.equal('moin');
 					// return this;

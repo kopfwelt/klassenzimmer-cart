@@ -1,9 +1,9 @@
-import Storage from './storage';
+import StorageInterface from './storage-interface';
 
 /**
  * @extends {Storage}
  */
-class StorageCookie extends Storage {
+class StorageCookie extends StorageInterface {
 
 	get(name) {
 		const cookies = this.all();
