@@ -2,46 +2,50 @@ import StorageInterface from './storage-interface';
 
 /**
  * @extends {Storage}
+ * @class
  */
 class StorageLocalStorage extends StorageInterface {
 
 	read(key) {
 		const promise = new Promise((fulfill, reject) => {
-			const item = localStorage.getItem(key);
-			if (item) {
-				fulfill(item);
-			} else {
-				reject();
-			}
+			const json = localStorage.getItem(key);
+			const object = JSON.parse(json);
+			fulfill(object);
 		});
 		return promise;
 	}
 
-	save(key, object, options = {}) {
+	save(key, object) {
 		const json = JSON.stringify(object);
+		const that = this;
 		const promise = new Promise((fulfill, reject) => {
-			const success = localStorage.setItem(key, json);
-			if (success) {
-				fulfill();
-			} else {
-				reject();
+			try {
+				localStorage.setItem(key, json);
+				fulfill(that);
+			} catch (error) {
+				reject(error);
 			}
 		});
 		return promise;
 	}
 
-	storageAvailable(type) {
-		try {
-			var storage = window[type],
-				x = '__storage_test__';
-			storage.setItem(x, x);
-			storage.removeItem(x);
-			return true;
-		}
-		catch(e) {
-			return false;
-		}
-	}
+	// _available(type) {
+	// if(typeof(Storage) !== "undefined") {
+    // Code for localStorage/sessionStorage.
+	// } else {
+	//     // Sorry! No Web Storage support..
+	// }
+	// 	try {
+	// 		var storage = window[type],
+	// 			x = '__storage_test__';
+	// 		storage.setItem(x, x);
+	// 		storage.removeItem(x);
+	// 		return true;
+	// 	}
+	// 	catch(e) {
+	// 		return false;
+	// 	}
+	// }
 }
 
 export default new StorageLocalStorage();

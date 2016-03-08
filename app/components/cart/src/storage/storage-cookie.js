@@ -5,44 +5,61 @@ import StorageInterface from './storage-interface';
  */
 class StorageCookie extends StorageInterface {
 
-	get(name) {
-		const cookies = this.all();
+	read(key) {
+		const that = this;
+		const promise = new Promise((fulfill, reject) => {
+			const cookies = that.all();
 
-		if (cookies) {
-			return cookies[name];
-		}
+			if (cookies) {
+				const json = cookies[key];
+				const object = JSON.parse(json);
+				fulfill(object);
+			} else {
+				reject();
+			}
+		});
 
-		return null;
+		return promise;
 	}
 
-	set(name, value, options = {}) {
-		let str = `${this.encode(name)}=${this.encode(value)}`;
+	save(key, object, options = {}) {
+		const json = JSON.stringify(object);
+		const promise = new Promise((fulfill, reject) => {
+			try {
+				let str = `${this.encode(key)}=${this.encode(json)}`;
 
-		if (value === null) {
-			options.expiry = -1;
-		}
+				if (object === null) {
+					options.expiry = -1;
+				}
 
-		if (options.expiry && !options.expires) {
-			options.expires = new Date(+new Date() + options.expiry);
-		}
+				if (options.expiry && !options.expires) {
+					options.expires = new Date(+new Date() + options.expiry);
+				}
 
-		if (options.path) {
-			str += `; path=${options.path}`;
-		}
+				if (options.path) {
+					str += `; path=${options.path}`;
+				}
 
-		if (options.domain) {
-			str += `; domain=${options.domain}`;
-		}
+				if (options.domain) {
+					str += `; domain=${options.domain}`;
+				}
 
-		if (options.expires) {
-			str += `; expires=${options.expires.toUTCString()}`;
-		}
+				if (options.expires) {
+					str += `; expires=${options.expires.toUTCString()}`;
+				}
 
-		if (options.secure) {
-			str += '; secure';
-		}
+				if (options.secure) {
+					str += '; secure';
+				}
 
-		document.cookie = str;
+				document.cookie = str;
+				fulfill();
+			} catch (error) {
+				reject(error);
+			}
+		});
+
+		return promise;
 	}
 
 	all() {
@@ -50,20 +67,20 @@ class StorageCookie extends StorageInterface {
 	}
 
 	parse(str) {
-		// const obj = {};
-		// const pairs = str.split(/ *; */);
-		// const pair;
+		const obj = {};
+		const pairs = str.split(/ *; */);
+		let pair = null;
 
-		// if ('' == pairs[0]) {
-		// 	return obj;
-		// }
+		if (pairs[0] === '') {
+			return obj;
+		}
 
-		// for (let i = 0; i < pairs.length; ++i) {
-		// 	pair = pairs[i].split('=');
-		// 	obj[this.decode(pair[0])] = this.decode(pair[1]);
-		// }
+		for (let i = 0; i < pairs.length; ++i) {
+			pair = pairs[i].split('=');
+			obj[this.decode(pair[0])] = this.decode(pair[1]);
+		}
 
-		// return obj;
+		return obj;
 	}
 
 	encode(value) {

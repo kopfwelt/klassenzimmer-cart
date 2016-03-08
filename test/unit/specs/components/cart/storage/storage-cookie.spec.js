@@ -5,22 +5,44 @@ const expect = chai.expect;
 
 import cookie from '../../../../../../app/components/cart/src/storage/storage-cookie';
 
-describe('StorageLocalStorage', () => {
-	describe('set', () => {
-		// it('should save a cookie', () => {
-		// 	cookie.set('cart', 'moin');
-		// 	const cart = cookie.get('cart');
-		// 	expect(cart).to.be.equal('moin');
-		// });
-		it('should save to localStorage');
+describe('StorageCookie', () => {
+	describe('read', () => {
+		it('should read saved cookie', () => {
+			cookie
+				.save('cart', {moin:"moin"})
+				.then(() => {
+					cookie
+						.read('cart')
+						.then(items => {
+							expect(items).to.be.an.object;
+							expect(items.moin).to.be.equal('moin');
+							done();
+						}, () => {
+							throw new Error('Can read local storage');
+						});
+				}, () => {
+					throw new Error('Can not save to local storage');
+				});
+		});
 	});
 
-	describe('get', () => {
-		// it('should save a cookie', () => {
-		// 	cookie.set('cart', 'moin');
-		// 	const cart = cookie.get('cart');
-		// 	expect(cart).to.be.equal('moin');
-		// });
-		it('should read to localStorage');
+	describe('save', () => {
+		it('should save a cookie', () => {
+			cookie
+				.save('cart', {moin:"moin"})
+				.then(() => {
+					cookie
+						.read('cart')
+						.then(items => {
+							expect(items).to.be.an.object;
+							expect(items.moin).to.be.equal('moin');
+							done();
+						}, () => {
+							throw new Error('Can read cookie');
+						});
+				}, () => {
+					throw new Error('Can not save to cookie');
+				});
+		});
 	});
 });

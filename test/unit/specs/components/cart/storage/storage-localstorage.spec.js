@@ -5,34 +5,60 @@ const expect = chai.expect;
 
 import localstorage from '../../../../../../app/components/cart/src/storage/storage-localstorage';
 
-describe('StorageCookie', () => {
+describe('StorageLocalStorage', () => {
 	describe('save', () => {
-		it('should save to localStorage', () => {
+		it('should save to localStorage', done => {
 			localstorage
-				.save('cart', {steve:"steve"});
-			localstorage
-				.read('cart')
-				.then(items => {
-					expect(items).to.be.equal('moin');
-					done();
-				})
-				.catch(() => {
+				.save('cart', {steve:"steve"})
+				.then(() => {
+					localstorage
+						.read('cart')
+						.then(items => {
+							expect(items).to.be.an.object;
+							expect(items.steve).to.be.equal('steve');
+							done();
+						}, () => {
+							throw new Error('Can read local storage');
+						});
+				}, () => {
 					throw new Error('Can not save to local storage');
 				});
+
+			localstorage
+				.save('cart', {moin:"moin"})
+				.then(() => {
+					localstorage
+						.read('cart')
+						.then(items => {
+							expect(items).to.be.an.object;
+							expect(items.moin).to.be.equal('moin');
+							done();
+						}, () => {
+							throw new Error('Can read local storage');
+						});
+				}, () => {
+					throw new Error('Can not save to local storage');
+				});
+
 		});
 	});
 
 	describe('read', () => {
 		it('should read a localStorage', () => {
 			localstorage
-				.read('cart')
-				.then(items => {
-					expect(items).to.be.equal('moin');
-					// return this;
-					done();
-				})
-				.catch(() => {
-					throw new Error('Can not read local storage');
+				.save('cart', {moin:"moin"})
+				.then(() => {
+					localstorage
+						.read('cart')
+						.then(items => {
+							expect(items).to.be.an.object;
+							expect(items.moin).to.be.equal('moin');
+							done();
+						}, () => {
+							throw new Error('Can read local storage');
+						});
+				}, () => {
+					throw new Error('Can not save to local storage');
 				});
 		});
 	});
