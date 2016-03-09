@@ -12,7 +12,8 @@ class Storage {
 
 	/**
 	 * Saves string
-	 * @param {String} name   Identifier of the saved object
+	 *
+	 * @param {String} key   Identifier of the saved object
 	 * @param {Object} object Object to be saved serialized
 	 */
 	save(key, object = {}) {}

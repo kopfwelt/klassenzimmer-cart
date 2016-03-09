@@ -16,6 +16,7 @@ class CartSorted extends Cart {
 
 	/**
 	 * Adds item to the cart and sets a position for an item
+	 *
 	 * @param {Object} item  Can be any object, but must have an unique id
 	 * @param {Number} count Amount of the item you want to add
 	 * @param {Number} position Position of the cart

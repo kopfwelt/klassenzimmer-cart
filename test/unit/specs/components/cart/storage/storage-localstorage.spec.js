@@ -44,7 +44,7 @@ describe('StorageLocalStorage', () => {
 	});
 
 	describe('read', () => {
-		it('should read a localStorage', () => {
+		it('should read a localStorage', done => {
 			localstorage
 				.save('cart', {moin:"moin"})
 				.then(() => {

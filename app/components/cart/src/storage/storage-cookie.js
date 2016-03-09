@@ -5,6 +5,12 @@ import StorageInterface from './storage-interface';
  */
 class StorageCookie extends StorageInterface {
 
+	/**
+	 * Reads a cookie key
+	 *
+	 * @param  {String} key Identifier
+	 * @return {Promise}
+	 */
 	read(key) {
 		const that = this;
 		const promise = new Promise((fulfill, reject) => {
@@ -22,6 +28,14 @@ class StorageCookie extends StorageInterface {
 		return promise;
 	}
 
+	/**
+	 * Saves a cookie
+	 *
+	 * @param  {String} key Identifier
+	 * @param  {Object} object Data to save
+	 * @param  {Object} options
+	 * @return {Promise}
+	 */
 	save(key, object, options = {}) {
 		const json = JSON.stringify(object);
 		const promise = new Promise((fulfill, reject) => {
@@ -62,10 +76,21 @@ class StorageCookie extends StorageInterface {
 		return promise;
 	}
 
+	/**
+	 * Return complete cookie as object
+	 *
+	 * @return {Object}
+	 */
 	all() {
 		return this.parse(document.cookie);
 	}
 
+	/**
+	 * Parses cookie
+	 *
+	 * @param  {String} str
+	 * @return {Object}
+	 */
 	parse(str) {
 		const obj = {};
 		const pairs = str.split(/ *; */);
@@ -83,6 +108,12 @@ class StorageCookie extends StorageInterface {
 		return obj;
 	}
 
+	/**
+	 * Url encodes string
+	 *
+	 * @param  {String} value
+	 * @return {String|null}
+	 */
 	encode(value) {
 		try {
 			return encodeURIComponent(value);
@@ -91,6 +122,12 @@ class StorageCookie extends StorageInterface {
 		}
 	}
 
+	/**
+	 * Url encodes string
+	 *
+	 * @param  {String} value
+	 * @return {String|null}
+	 */
 	decode(value) {
 		try {
 			return decodeURIComponent(value);

@@ -7,7 +7,7 @@ import cookie from '../../../../../../app/components/cart/src/storage/storage-co
 
 describe('StorageCookie', () => {
 	describe('read', () => {
-		it('should read saved cookie', () => {
+		it('should read saved cookie', done => {
 			cookie
 				.save('cart', {moin:"moin"})
 				.then(() => {
@@ -27,7 +27,7 @@ describe('StorageCookie', () => {
 	});
 
 	describe('save', () => {
-		it('should save a cookie', () => {
+		it('should save a cookie', done => {
 			cookie
 				.save('cart', {moin:"moin"})
 				.then(() => {

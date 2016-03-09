@@ -151,5 +151,28 @@ describe('Cart', () => {
 			expect(indexNails).to.be.equal(0);
 		});
 	});
+	describe('_index', () => {
+		it('should return the index of an existing item in the cart', () => {
+			cart.init({
+				uniqueId: 'sku'
+			})
+			.add(nail, 10)
+			.add(hammer, 1);
+
+			const indexHammer = cart._index(hammer);
+			expect(indexHammer).to.be.equal(1);
+
+			const indexNails = cart._index(nail);
+			expect(indexNails).to.be.equal(0);
+		});
+	});
+	
+	describe('_save', () => {
+		it('should save cart items');
+	});
+	
+	describe('_read', () => {
+		it('should read cart items');
+	});
 
 });

@@ -6,6 +6,9 @@
  */
 class Cart {
 
+	/**
+	 * @constructor
+	 */
 	constructor() {
 		this._items = [];
 		this._options = [];
@@ -14,6 +17,7 @@ class Cart {
 
 	/**
 	 * Set storage engine
+	 *
 	 * @param  {Storage} engine Set storage enginge for use of cookie, localstorage, ...
 	 * @return {Cart}        Cart instance this
 	 */
@@ -38,6 +42,7 @@ class Cart {
 
 	/**
 	 * Returns plain cart items
+	 *
 	 * @return {Array} Cart items
 	 */
 	get() {
@@ -46,6 +51,7 @@ class Cart {
 
 	/**
 	 * Adds an item to the cart
+	 *
 	 * @param {Object} item  Can be any object, but must have an unique id
 	 * @param {Number} count Amount of the item you want to add
 	 * @return {Cart}        Cart instance this
@@ -64,6 +70,7 @@ class Cart {
 
 	/**
 	 * Removes an item from the cart
+	 *
 	 * @param  {Object} item An object already added to the cart
 	 * @return {Cart}        Cart instance this
 	 */
@@ -78,6 +85,7 @@ class Cart {
 
 	/**
 	 * Empties the cart
+	 *
 	 * @return {Cart}        Cart instance this
 	 */
 	clear() {
@@ -88,6 +96,7 @@ class Cart {
 
 	/**
 	 * Checks if an item exists in the carts
+	 *
 	 * @param  {Objext} item
 	 * @return {Boolean}
 	 * @private
@@ -106,6 +115,7 @@ class Cart {
 
 	/**
 	 * Returns the index of an item in the cart
+	 *
 	 * @param  {Object} item
 	 * @return {Integer}
 	 * @private
@@ -124,6 +134,7 @@ class Cart {
 
 	/**
 	 * Returns saved items
+	 *
 	 * @return {Array} Saved items
 	 * @private
 	 */
@@ -135,6 +146,7 @@ class Cart {
 
 	/**
 	 * Saves items
+	 *
 	 * @private
 	 */
 	_save() {

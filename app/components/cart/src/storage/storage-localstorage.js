@@ -6,6 +6,12 @@ import StorageInterface from './storage-interface';
  */
 class StorageLocalStorage extends StorageInterface {
 
+	/**
+	 * Reads a object from Local Storage
+	 *
+	 * @param  {String} key Identifier
+	 * @return {Promise}
+	 */
 	read(key) {
 		const promise = new Promise((fulfill, reject) => {
 			const json = localStorage.getItem(key);
@@ -15,6 +21,13 @@ class StorageLocalStorage extends StorageInterface {
 		return promise;
 	}
 
+	/**
+	 * Saves a object to local storage
+	 *
+	 * @param  {String} key Identifier
+	 * @param  {Object} object data to save
+	 * @return {Promise}
+	 */
 	save(key, object) {
 		const json = JSON.stringify(object);
 		const that = this;
