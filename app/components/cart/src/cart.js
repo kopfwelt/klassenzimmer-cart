@@ -1,15 +1,19 @@
+import EventEmitter from 'wolfy87-eventemitter';
+
 /**
  * Handles objects and provides simple cart interface.
  * Use it together with storage enginges to create persistancy
  *
  * @class
  */
-class Cart {
+class Cart extends EventEmitter {
 
 	/**
 	 * @constructor
 	 */
 	constructor() {
+		super();
+
 		this._items = [];
 		this._options = [];
 		this._storage = undefined;
@@ -35,7 +39,10 @@ class Cart {
 	 */
 	init(options = {}) {
 		this._options = options;
-		// this._items = this._read();
+		this._read()
+			.then(
+				this.set.bind(this)
+			);
 
 		return this;
 	}
@@ -47,6 +54,17 @@ class Cart {
 	 */
 	get() {
 		return this._items;
+	}
+
+	/**
+	 * Set cart items
+	 *
+	 * @param {Array} items
+	 */
+	set(items) {
+		if(items) {
+			this._items = items;
+		}
 	}
 
 	/**
@@ -63,7 +81,8 @@ class Cart {
 		} else {
 			this._items.push({item, count});
 		}
-		// this._save(this._items);
+		this._save(this._items)
+			.then(this._updated.bind(this));
 
 		return this;
 	}
@@ -89,9 +108,14 @@ class Cart {
 	 * @return {Cart}        Cart instance this
 	 */
 	clear() {
-		this._items = [];
+		this.set([]);
+		this._save(this.get());
 
 		return this;
+	}
+
+	_updated() {
+		this.emitEvent('update');
 	}
 
 	/**
@@ -103,7 +127,7 @@ class Cart {
 	 */
 	_contains(item) {
 		let contains = false;
-		const uniqueId = this._options['uniqueId'];
+		const uniqueId = this._options['identifier'];
 		for (let i = 0; i < this._items.length; i++) {
 			if (this._items[i].item[uniqueId] === item[uniqueId]) {
 				contains = true;
@@ -122,7 +146,7 @@ class Cart {
 	 */
 	_index(item) {
 		let index = 0;
-		const uniqueId = this._options['uniqueId'];
+		const uniqueId = this._options['identifier'];
 		for (let i = 0; i < this._items.length; i++) {
 			if (this._items[i].item[uniqueId] === item[uniqueId]) {
 				index = i;
@@ -139,9 +163,15 @@ class Cart {
 	 * @private
 	 */
 	_read() {
+		let promise = undefined;
 		if (typeof this._storage !== 'undefined') {
-			return this._storage.read('cart');
+			promise =  this._storage.read('cart');
+		} else {
+			promise = new Promise((fulfill, reject) => {
+				fulfill();
+			});
 		}
+		return promise;
 	}
 
 	/**
@@ -149,9 +179,9 @@ class Cart {
 	 *
 	 * @private
 	 */
-	_save() {
+	_save(items) {
 		if (typeof this._storage !== 'undefined') {
-			return this._storage.save('cart', this.items);
+			return this._storage.save('cart', items);
 		}
 	}
 

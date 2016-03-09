@@ -4,7 +4,7 @@ import chai from 'chai';
 const expect = chai.expect;
 
 import Cart from '../../../../../app/components/cart/src/cart';
-import localstorage from '../../../../../app/components/cart/src/storage/storage-localstorage';
+import storage from '../../../../../app/components/cart/src/storage/storage';
 
 describe('Cart', () => {
 	let cart = null;
@@ -44,17 +44,18 @@ describe('Cart', () => {
 	describe('use', () => {
 		it('should add a storage engine', () => {
 			cart
-				.use(localstorage);
+				.use(storage('localstorage'));
 
-			expect(cart._storage).to.be.equal(localstorage);
+			expect(cart._storage).to.be.equal(storage('localstorage'));
 		});
 	});
 
 	describe('add', () => {
 		it('should add an object to the collection', () => {
 			cart
+				.use(storage('localstorage'))
 				.init({
-					uniqueId: 'sku'
+					identifier: 'sku'
 				})
 				.add(hammer, 2);
 			expect(cart.get()).to.be.an('array');
@@ -63,8 +64,9 @@ describe('Cart', () => {
 
 		it('should add increase the count of an item if item exists in cart', () => {
 			cart
+				.use(storage('localstorage'))
 				.init({
-					uniqueId: 'sku'
+					identifier: 'sku'
 				})
 				.add(hammer, 2)
 				.add(hammer, 2);
@@ -75,12 +77,11 @@ describe('Cart', () => {
 
 	describe('remove', () => {
 		it('should remove a certain item from the cart', () => {
-
 			cart
-				.init({
-					uniqueId: 'sku'
-				})
 				.add(hammer, 2)
+				.init({
+					identifier: 'sku'
+				})
 				.add(bucket, 1)
 				.add(nail, 2)
 				.remove(bucket);
@@ -98,22 +99,34 @@ describe('Cart', () => {
 		it('should clear the cart', () => {
 			cart
 				.init({
-					uniqueId: 'sku'
+					identifier: 'sku'
 				})
-				.add({
-					sku: 111231923,
-					title: 'steve'
-				}, 2)
+				.add(hammer, 2)
 				.clear();
 			expect(cart.get()).to.be.an('array');
 			expect(cart.get().length).to.be.equal(0);
 		});
 	});
 
+	describe('_updated', () => {
+		it('should add an object to the collection', done => {
+			cart
+				.use(storage('localstorage'))
+				.init({
+					identifier: 'sku'
+				})
+				.on('update', () => {
+					expect(cart.get()).to.be.an('array');
+					done();
+				})
+				.add(hammer, 2);
+		});
+	});
+
 	describe('_contains', () => {
 		it('should return true if an item exists already in cart', () => {
 			cart.init({
-				uniqueId: 'sku'
+				identifier: 'sku'
 			})
 			.add(nail, 10)
 			.add(hammer, 1);
@@ -126,7 +139,7 @@ describe('Cart', () => {
 		});
 		it('should return false if an item does not exists already in cart', () => {
 			cart.init({
-				uniqueId: 'sku'
+				identifier: 'sku'
 			})
 			.add(nail, 10)
 			.add(hammer, 1);
@@ -139,7 +152,7 @@ describe('Cart', () => {
 	describe('_index', () => {
 		it('should return the index of an existing item in the cart', () => {
 			cart.init({
-				uniqueId: 'sku'
+				identifier: 'sku'
 			})
 			.add(nail, 10)
 			.add(hammer, 1);
@@ -151,10 +164,11 @@ describe('Cart', () => {
 			expect(indexNails).to.be.equal(0);
 		});
 	});
+
 	describe('_index', () => {
 		it('should return the index of an existing item in the cart', () => {
 			cart.init({
-				uniqueId: 'sku'
+				identifier: 'sku'
 			})
 			.add(nail, 10)
 			.add(hammer, 1);
@@ -166,13 +180,38 @@ describe('Cart', () => {
 			expect(indexNails).to.be.equal(0);
 		});
 	});
-	
+
 	describe('_save', () => {
-		it('should save cart items');
-	});
-	
-	describe('_read', () => {
-		it('should read cart items');
+		it('should save cart items', () => {
+			const engine = storage('localstorage');
+			cart
+				.use(engine)
+				.init({
+					identifier: 'sku'
+				})
+				.add(nail, 10);
+			engine.read('cart')
+				.then(items => {
+					expect(items[0].item.sku).to.be.equal(nail.sku);
+				});
+		});
 	});
 
+	describe('_read', () => {
+		it('should read cart items', done => {
+			cart
+				.use(storage('localstorage'))
+				.init({
+					identifier: 'sku'
+				})
+				.add(nail, 10)
+				._read()
+				.then(items => {
+					expect(items[0].item.sku).to.be.equal(nail.sku);
+					done();
+				}, error => {
+					done();
+				});
+		});
+	});
 });

@@ -9,7 +9,7 @@ describe('StorageLocalStorage', () => {
 	describe('save', () => {
 		it('should save to localStorage', done => {
 			localstorage
-				.save('cart', {steve:"steve"})
+				.save('cart', {steve: 'steve'})
 				.then(() => {
 					localstorage
 						.read('cart')
@@ -23,30 +23,13 @@ describe('StorageLocalStorage', () => {
 				}, () => {
 					throw new Error('Can not save to local storage');
 				});
-
-			localstorage
-				.save('cart', {moin:"moin"})
-				.then(() => {
-					localstorage
-						.read('cart')
-						.then(items => {
-							expect(items).to.be.an.object;
-							expect(items.moin).to.be.equal('moin');
-							done();
-						}, () => {
-							throw new Error('Can read local storage');
-						});
-				}, () => {
-					throw new Error('Can not save to local storage');
-				});
-
 		});
 	});
 
 	describe('read', () => {
 		it('should read a localStorage', done => {
 			localstorage
-				.save('cart', {moin:"moin"})
+				.save('cart', {moin: 'moin'})
 				.then(() => {
 					localstorage
 						.read('cart')
