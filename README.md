@@ -15,9 +15,13 @@ The cart implementation should be designed either as class with inheritance (bas
 The tests should cover all methods.
 
 [Documentation EsDoc](http://kopfwelt.github.io/klassenzimmer-cart/reports/documentation/esdoc)
-[Documentation JsDoc](http://kopfwelt.github.io/klassenzimmer-cart/reports/documentation/jsdoc
-[coverage](http://kopfwelt.github.io/klassenzimmer-cart/reports/coverage/
-[Plato](http://kopfwelt.github.io/klassenzimmer-cart/reports/plato/
+
+[Documentation JsDoc](http://kopfwelt.github.io/klassenzimmer-cart/reports/documentation/jsdoc)
+
+[coverage](http://kopfwelt.github.io/klassenzimmer-cart/reports/coverage/)
+
+[Plato](http://kopfwelt.github.io/klassenzimmer-cart/reports/plato/)
+
 
 ### Articles
 
