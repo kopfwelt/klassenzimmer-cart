@@ -127,7 +127,7 @@ class Cart extends EventEmitter {
 	 */
 	_contains(item) {
 		let contains = false;
-		const uniqueId = this._options['identifier'];
+		const uniqueId = this._options.identifier;
 		for (let i = 0; i < this._items.length; i++) {
 			if (this._items[i].item[uniqueId] === item[uniqueId]) {
 				contains = true;
@@ -146,7 +146,7 @@ class Cart extends EventEmitter {
 	 */
 	_index(item) {
 		let index = 0;
-		const uniqueId = this._options['identifier'];
+		const uniqueId = this._options.identifier;
 		for (let i = 0; i < this._items.length; i++) {
 			if (this._items[i].item[uniqueId] === item[uniqueId]) {
 				index = i;
@@ -163,11 +163,11 @@ class Cart extends EventEmitter {
 	 * @private
 	 */
 	_read() {
-		let promise = undefined;
-		if (typeof this._storage !== 'undefined') {
-			promise =  this._storage.read('cart');
+		let promise;
+		if (this._storage) {
+			promise = this._storage.read('cart');
 		} else {
-			promise = new Promise((fulfill, reject) => {
+			promise = new Promise(fulfill => {
 				fulfill();
 			});
 		}
