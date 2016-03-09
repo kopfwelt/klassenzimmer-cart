@@ -120,8 +120,8 @@
     "longname": "app/components/cart/src/cart.js",
     "access": null,
     "description": null,
-    "lineNumber": 7,
-    "content": "/**\n * Handles objects and provides simple cart interface.\n * Use it together with storage enginges to create persistancy\n *\n * @class\n */\nclass Cart {\n\n\t/**\n\t * @constructor\n\t */\n\tconstructor() {\n\t\tthis._items = [];\n\t\tthis._options = [];\n\t\tthis._storage = undefined;\n\t}\n\n\t/**\n\t * Set storage engine\n\t *\n\t * @param  {Storage} engine Set storage enginge for use of cookie, localstorage, ...\n\t * @return {Cart}        Cart instance this\n\t */\n\tuse(engine) {\n\t\tthis._storage = engine;\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Init cart by passing options.\n\t *\n\t * @param  {Object} options [description]\n\t * @return {Cart}        Cart instance this\n\t */\n\tinit(options = {}) {\n\t\tthis._options = options;\n\t\t// this._items = this._read();\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Returns plain cart items\n\t *\n\t * @return {Array} Cart items\n\t */\n\tget() {\n\t\treturn this._items;\n\t}\n\n\t/**\n\t * Adds an item to the cart\n\t *\n\t * @param {Object} item  Can be any object, but must have an unique id\n\t * @param {Number} count Amount of the item you want to add\n\t * @return {Cart}        Cart instance this\n\t */\n\tadd(item, count = 1) {\n\t\tif (this._contains(item)) {\n\t\t\tconst index = this._index(item);\n\t\t\tthis._items[index].count += count;\n\t\t} else {\n\t\t\tthis._items.push({item, count});\n\t\t}\n\t\t// this._save(this._items);\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Removes an item from the cart\n\t *\n\t * @param  {Object} item An object already added to the cart\n\t * @return {Cart}        Cart instance this\n\t */\n\tremove(item) {\n\t\tif (this._contains(item)) {\n\t\t\tconst index = this._index(item);\n\t\t\tthis._items.splice(index, 1);\n\t\t}\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Empties the cart\n\t *\n\t * @return {Cart}        Cart instance this\n\t */\n\tclear() {\n\t\tthis._items = [];\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Checks if an item exists in the carts\n\t *\n\t * @param  {Objext} item\n\t * @return {Boolean}\n\t * @private\n\t */\n\t_contains(item) {\n\t\tlet contains = false;\n\t\tconst uniqueId = this._options['uniqueId'];\n\t\tfor (let i = 0; i < this._items.length; i++) {\n\t\t\tif (this._items[i].item[uniqueId] === item[uniqueId]) {\n\t\t\t\tcontains = true;\n\t\t\t}\n\t\t}\n\n\t\treturn contains;\n\t}\n\n\t/**\n\t * Returns the index of an item in the cart\n\t *\n\t * @param  {Object} item\n\t * @return {Integer}\n\t * @private\n\t */\n\t_index(item) {\n\t\tlet index = 0;\n\t\tconst uniqueId = this._options['uniqueId'];\n\t\tfor (let i = 0; i < this._items.length; i++) {\n\t\t\tif (this._items[i].item[uniqueId] === item[uniqueId]) {\n\t\t\t\tindex = i;\n\t\t\t}\n\t\t}\n\n\t\treturn index;\n\t}\n\n\t/**\n\t * Returns saved items\n\t *\n\t * @return {Array} Saved items\n\t * @private\n\t */\n\t_read() {\n\t\tif (typeof this._storage !== 'undefined') {\n\t\t\treturn this._storage.read('cart');\n\t\t}\n\t}\n\n\t/**\n\t * Saves items\n\t *\n\t * @private\n\t */\n\t_save() {\n\t\tif (typeof this._storage !== 'undefined') {\n\t\t\treturn this._storage.save('cart', this.items);\n\t\t}\n\t}\n\n}\n\nexport default Cart;\n"
+    "lineNumber": 1,
+    "content": "import EventEmitter from 'wolfy87-eventemitter';\n\n/**\n * Handles objects and provides simple cart interface.\n * Use it together with storage enginges to create persistancy\n *\n * @class\n */\nclass Cart extends EventEmitter {\n\n\t/**\n\t * @constructor\n\t */\n\tconstructor() {\n\t\tsuper();\n\n\t\tthis._items = [];\n\t\tthis._options = [];\n\t\tthis._storage = undefined;\n\t}\n\n\t/**\n\t * Set storage engine\n\t *\n\t * @param  {Storage} engine Set storage enginge for use of cookie, localstorage, ...\n\t * @return {Cart}        Cart instance this\n\t */\n\tuse(engine) {\n\t\tthis._storage = engine;\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Init cart by passing options.\n\t *\n\t * @param  {Object} options [description]\n\t * @return {Cart}        Cart instance this\n\t */\n\tinit(options = {}) {\n\t\tthis._options = options;\n\t\tthis._read()\n\t\t\t.then(\n\t\t\t\tthis.set.bind(this)\n\t\t\t);\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Returns plain cart items\n\t *\n\t * @return {Array} Cart items\n\t */\n\tget() {\n\t\treturn this._items;\n\t}\n\n\t/**\n\t * Set cart items\n\t *\n\t * @param {Array} items\n\t */\n\tset(items) {\n\t\tif(items) {\n\t\t\tthis._items = items;\n\t\t}\n\t}\n\n\t/**\n\t * Adds an item to the cart\n\t *\n\t * @param {Object} item  Can be any object, but must have an unique id\n\t * @param {Number} count Amount of the item you want to add\n\t * @return {Cart}        Cart instance this\n\t */\n\tadd(item, count = 1) {\n\t\tif (this._contains(item)) {\n\t\t\tconst index = this._index(item);\n\t\t\tthis._items[index].count += count;\n\t\t} else {\n\t\t\tthis._items.push({item, count});\n\t\t}\n\t\tthis._save(this._items)\n\t\t\t.then(this._updated.bind(this));\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Removes an item from the cart\n\t *\n\t * @param  {Object} item An object already added to the cart\n\t * @return {Cart}        Cart instance this\n\t */\n\tremove(item) {\n\t\tif (this._contains(item)) {\n\t\t\tconst index = this._index(item);\n\t\t\tthis._items.splice(index, 1);\n\t\t}\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Empties the cart\n\t *\n\t * @return {Cart}        Cart instance this\n\t */\n\tclear() {\n\t\tthis.set([]);\n\t\tthis._save(this.get());\n\n\t\treturn this;\n\t}\n\n\t_updated() {\n\t\tthis.emitEvent('update');\n\t}\n\n\t/**\n\t * Checks if an item exists in the carts\n\t *\n\t * @param  {Objext} item\n\t * @return {Boolean}\n\t * @private\n\t */\n\t_contains(item) {\n\t\tlet contains = false;\n\t\tconst uniqueId = this._options.identifier;\n\t\tfor (let i = 0; i < this._items.length; i++) {\n\t\t\tif (this._items[i].item[uniqueId] === item[uniqueId]) {\n\t\t\t\tcontains = true;\n\t\t\t}\n\t\t}\n\n\t\treturn contains;\n\t}\n\n\t/**\n\t * Returns the index of an item in the cart\n\t *\n\t * @param  {Object} item\n\t * @return {Integer}\n\t * @private\n\t */\n\t_index(item) {\n\t\tlet index = 0;\n\t\tconst uniqueId = this._options.identifier;\n\t\tfor (let i = 0; i < this._items.length; i++) {\n\t\t\tif (this._items[i].item[uniqueId] === item[uniqueId]) {\n\t\t\t\tindex = i;\n\t\t\t}\n\t\t}\n\n\t\treturn index;\n\t}\n\n\t/**\n\t * Returns saved items\n\t *\n\t * @return {Array} Saved items\n\t * @private\n\t */\n\t_read() {\n\t\tlet promise;\n\t\tif (this._storage) {\n\t\t\tpromise = this._storage.read('cart');\n\t\t} else {\n\t\t\tpromise = new Promise(fulfill => {\n\t\t\t\tfulfill();\n\t\t\t});\n\t\t}\n\t\treturn promise;\n\t}\n\n\t/**\n\t * Saves items\n\t *\n\t * @private\n\t */\n\t_save(items) {\n\t\tif (typeof this._storage !== 'undefined') {\n\t\t\treturn this._storage.save('cart', items);\n\t\t}\n\t}\n\n}\n\nexport default Cart;\n"
   },
   {
     "__docId__": 5,
@@ -136,14 +136,17 @@
     "importPath": "klassenzimmer-cart/app/components/cart/src/cart.js",
     "importStyle": "Cart",
     "description": "Handles objects and provides simple cart interface.\nUse it together with storage enginges to create persistancy",
-    "lineNumber": 7,
+    "lineNumber": 9,
     "unknown": [
       {
         "tagName": "@class",
         "tagValue": ""
       }
     ],
-    "interface": false
+    "interface": false,
+    "extends": [
+      "wolfy87-eventemitter~EventEmitter"
+    ]
   },
   {
     "__docId__": 6,
@@ -155,7 +158,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#constructor",
     "access": null,
     "description": "",
-    "lineNumber": 12,
+    "lineNumber": 14,
     "unknown": [
       {
         "tagName": "@constructor",
@@ -175,7 +178,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_items",
     "access": null,
     "description": null,
-    "lineNumber": 13,
+    "lineNumber": 17,
     "undocument": true,
     "type": {
       "types": [
@@ -193,7 +196,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_options",
     "access": null,
     "description": null,
-    "lineNumber": 14,
+    "lineNumber": 18,
     "undocument": true,
     "type": {
       "types": [
@@ -211,7 +214,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_storage",
     "access": null,
     "description": null,
-    "lineNumber": 15,
+    "lineNumber": 19,
     "undocument": true,
     "type": {
       "types": [
@@ -229,7 +232,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#use",
     "access": null,
     "description": "Set storage engine",
-    "lineNumber": 24,
+    "lineNumber": 28,
     "params": [
       {
         "nullable": null,
@@ -262,7 +265,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_storage",
     "access": null,
     "description": null,
-    "lineNumber": 25,
+    "lineNumber": 29,
     "undocument": true,
     "type": {
       "types": [
@@ -280,7 +283,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#init",
     "access": null,
     "description": "Init cart by passing options.",
-    "lineNumber": 36,
+    "lineNumber": 40,
     "params": [
       {
         "nullable": null,
@@ -313,7 +316,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_options",
     "access": null,
     "description": null,
-    "lineNumber": 37,
+    "lineNumber": 41,
     "undocument": true,
     "type": {
       "types": [
@@ -331,7 +334,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#get",
     "access": null,
     "description": "Returns plain cart items",
-    "lineNumber": 48,
+    "lineNumber": 55,
     "params": [],
     "return": {
       "nullable": null,
@@ -348,12 +351,55 @@
     "kind": "method",
     "static": false,
     "variation": null,
+    "name": "set",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#set",
+    "access": null,
+    "description": "Set cart items",
+    "lineNumber": 64,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Array"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "items",
+        "description": ""
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 16,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_items",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_items",
+    "access": null,
+    "description": null,
+    "lineNumber": 66,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "static": false,
+    "variation": null,
     "name": "add",
     "memberof": "app/components/cart/src/cart.js~Cart",
     "longname": "app/components/cart/src/cart.js~Cart#add",
     "access": null,
     "description": "Adds an item to the cart",
-    "lineNumber": 59,
+    "lineNumber": 77,
     "params": [
       {
         "nullable": null,
@@ -387,7 +433,7 @@
     "generator": false
   },
   {
-    "__docId__": 16,
+    "__docId__": 18,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -396,7 +442,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#remove",
     "access": null,
     "description": "Removes an item from the cart",
-    "lineNumber": 77,
+    "lineNumber": 96,
     "params": [
       {
         "nullable": null,
@@ -420,7 +466,7 @@
     "generator": false
   },
   {
-    "__docId__": 17,
+    "__docId__": 19,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -429,7 +475,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#clear",
     "access": null,
     "description": "Empties the cart",
-    "lineNumber": 91,
+    "lineNumber": 110,
     "params": [],
     "return": {
       "nullable": null,
@@ -442,25 +488,22 @@
     "generator": false
   },
   {
-    "__docId__": 18,
-    "kind": "member",
+    "__docId__": 20,
+    "kind": "method",
     "static": false,
     "variation": null,
-    "name": "_items",
+    "name": "_updated",
     "memberof": "app/components/cart/src/cart.js~Cart",
-    "longname": "app/components/cart/src/cart.js~Cart#_items",
+    "longname": "app/components/cart/src/cart.js~Cart#_updated",
     "access": null,
     "description": null,
-    "lineNumber": 92,
+    "lineNumber": 117,
     "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
+    "params": [],
+    "generator": false
   },
   {
-    "__docId__": 19,
+    "__docId__": 21,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -469,7 +512,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_contains",
     "access": "private",
     "description": "Checks if an item exists in the carts",
-    "lineNumber": 104,
+    "lineNumber": 128,
     "params": [
       {
         "nullable": null,
@@ -493,7 +536,7 @@
     "generator": false
   },
   {
-    "__docId__": 20,
+    "__docId__": 22,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -502,7 +545,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_index",
     "access": "private",
     "description": "Returns the index of an item in the cart",
-    "lineNumber": 123,
+    "lineNumber": 147,
     "params": [
       {
         "nullable": null,
@@ -526,7 +569,7 @@
     "generator": false
   },
   {
-    "__docId__": 21,
+    "__docId__": 23,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -535,7 +578,7 @@
     "longname": "app/components/cart/src/cart.js~Cart#_read",
     "access": "private",
     "description": "Returns saved items",
-    "lineNumber": 141,
+    "lineNumber": 165,
     "params": [],
     "return": {
       "nullable": null,
@@ -548,7 +591,7 @@
     "generator": false
   },
   {
-    "__docId__": 22,
+    "__docId__": 24,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -557,8 +600,15 @@
     "longname": "app/components/cart/src/cart.js~Cart#_save",
     "access": "private",
     "description": "Saves items",
-    "lineNumber": 152,
-    "params": [],
+    "lineNumber": 182,
+    "params": [
+      {
+        "name": "items",
+        "types": [
+          "*"
+        ]
+      }
+    ],
     "return": {
       "types": [
         "*"
@@ -567,7 +617,7 @@
     "generator": false
   },
   {
-    "__docId__": 23,
+    "__docId__": 25,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -580,7 +630,7 @@
     "content": "import StorageInterface from './storage-interface';\n\n/**\n * @extends {Storage}\n */\nclass StorageCookie extends StorageInterface {\n\n\t/**\n\t * Reads a cookie key\n\t *\n\t * @param  {String} key Identifier\n\t * @return {Promise}\n\t */\n\tread(key) {\n\t\tconst that = this;\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\tconst cookies = that.all();\n\n\t\t\tif (cookies) {\n\t\t\t\tconst json = cookies[key];\n\t\t\t\tconst object = JSON.parse(json);\n\t\t\t\tfulfill(object);\n\t\t\t} else {\n\t\t\t\treject();\n\t\t\t}\n\t\t});\n\n\t\treturn promise;\n\t}\n\n\t/**\n\t * Saves a cookie\n\t *\n\t * @param  {String} key Identifier\n\t * @param  {Object} object Data to save\n\t * @param  {Object} options\n\t * @return {Promise}\n\t */\n\tsave(key, object, options = {}) {\n\t\tconst json = JSON.stringify(object);\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\ttry {\n\t\t\t\tlet str = `${this.encode(key)}=${this.encode(json)}`;\n\n\t\t\t\tif (object === null) {\n\t\t\t\t\toptions.expiry = -1;\n\t\t\t\t}\n\n\t\t\t\tif (options.expiry && !options.expires) {\n\t\t\t\t\toptions.expires = new Date(+new Date() + options.expiry);\n\t\t\t\t}\n\n\t\t\t\tif (options.path) {\n\t\t\t\t\tstr += `; path=${options.path}`;\n\t\t\t\t}\n\n\t\t\t\tif (options.domain) {\n\t\t\t\t\tstr += `; domain=${options.domain}`;\n\t\t\t\t}\n\n\t\t\t\tif (options.expires) {\n\t\t\t\t\tstr += `; expires=${options.expires.toUTCString()}`;\n\t\t\t\t}\n\n\t\t\t\tif (options.secure) {\n\t\t\t\t\tstr += '; secure';\n\t\t\t\t}\n\n\t\t\t\tdocument.cookie = str;\n\t\t\t\tfulfill();\n\t\t\t} catch (error) {\n\t\t\t\treject(error);\n\t\t\t}\n\t\t});\n\n\t\treturn promise;\n\t}\n\n\t/**\n\t * Return complete cookie as object\n\t *\n\t * @return {Object}\n\t */\n\tall() {\n\t\treturn this.parse(document.cookie);\n\t}\n\n\t/**\n\t * Parses cookie\n\t *\n\t * @param  {String} str\n\t * @return {Object}\n\t */\n\tparse(str) {\n\t\tconst obj = {};\n\t\tconst pairs = str.split(/ *; */);\n\t\tlet pair = null;\n\n\t\tif (pairs[0] === '') {\n\t\t\treturn obj;\n\t\t}\n\n\t\tfor (let i = 0; i < pairs.length; ++i) {\n\t\t\tpair = pairs[i].split('=');\n\t\t\tobj[this.decode(pair[0])] = this.decode(pair[1]);\n\t\t}\n\n\t\treturn obj;\n\t}\n\n\t/**\n\t * Url encodes string\n\t *\n\t * @param  {String} value\n\t * @return {String|null}\n\t */\n\tencode(value) {\n\t\ttry {\n\t\t\treturn encodeURIComponent(value);\n\t\t} catch (e) {\n\t\t\treturn null;\n\t\t}\n\t}\n\n\t/**\n\t * Url encodes string\n\t *\n\t * @param  {String} value\n\t * @return {String|null}\n\t */\n\tdecode(value) {\n\t\ttry {\n\t\t\treturn decodeURIComponent(value);\n\t\t} catch (e) {\n\t\t\treturn null;\n\t\t}\n\t}\n}\n\nexport default new StorageCookie();"
   },
   {
-    "__docId__": 24,
+    "__docId__": 26,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -600,7 +650,7 @@
     ]
   },
   {
-    "__docId__": 25,
+    "__docId__": 27,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -633,7 +683,7 @@
     "generator": false
   },
   {
-    "__docId__": 26,
+    "__docId__": 28,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -686,7 +736,7 @@
     "generator": false
   },
   {
-    "__docId__": 27,
+    "__docId__": 29,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -708,7 +758,7 @@
     "generator": false
   },
   {
-    "__docId__": 28,
+    "__docId__": 30,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -741,7 +791,7 @@
     "generator": false
   },
   {
-    "__docId__": 29,
+    "__docId__": 31,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -775,7 +825,7 @@
     "generator": false
   },
   {
-    "__docId__": 30,
+    "__docId__": 32,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -809,7 +859,7 @@
     "generator": false
   },
   {
-    "__docId__": 31,
+    "__docId__": 33,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -830,7 +880,7 @@
     }
   },
   {
-    "__docId__": 32,
+    "__docId__": 34,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -840,10 +890,10 @@
     "access": null,
     "description": null,
     "lineNumber": 6,
-    "content": "/**\n * Storage interface\n *\n * @interface\n */\nclass Storage {\n\n\t/**\n\t * Returns a saved string\n\t */\n\tread(key) {}\n\n\t/**\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t */\n\tsave(key, object = {}) {}\n\n}\n\nexport default Storage;\n"
+    "content": "/**\n * Storage interface\n *\n * @interface\n */\nclass Storage {\n\n\t/**\n\t * Returns a saved string\n\t * @return {Promise}\n\t */\n\tread(key) {}\n\n\t/**\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t * @return {Promise}\n\t */\n\tsave(key, object = {}) {}\n\n\t/**\n\t * Clears the storage\n\t * @return {Promise}\n\t */\n\tclear() {}\n\n}\n\nexport default Storage;\n"
   },
   {
-    "__docId__": 33,
+    "__docId__": 35,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -859,7 +909,7 @@
     "interface": true
   },
   {
-    "__docId__": 34,
+    "__docId__": 36,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -868,7 +918,7 @@
     "longname": "app/components/cart/src/storage/storage-interface.js~Storage#read",
     "access": null,
     "description": "Returns a saved string",
-    "lineNumber": 11,
+    "lineNumber": 12,
     "params": [
       {
         "name": "key",
@@ -877,10 +927,18 @@
         ]
       }
     ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
     "generator": false
   },
   {
-    "__docId__": 35,
+    "__docId__": 37,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -889,7 +947,7 @@
     "longname": "app/components/cart/src/storage/storage-interface.js~Storage#save",
     "access": null,
     "description": "Saves string",
-    "lineNumber": 19,
+    "lineNumber": 21,
     "params": [
       {
         "nullable": null,
@@ -912,10 +970,40 @@
         "description": "Object to be saved serialized"
       }
     ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
     "generator": false
   },
   {
-    "__docId__": 36,
+    "__docId__": 38,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "clear",
+    "memberof": "app/components/cart/src/storage/storage-interface.js~Storage",
+    "longname": "app/components/cart/src/storage/storage-interface.js~Storage#clear",
+    "access": null,
+    "description": "Clears the storage",
+    "lineNumber": 27,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 39,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -928,7 +1016,7 @@
     "content": "import StorageInterface from './storage-interface';\n\n/**\n * @extends {Storage}\n * @class\n */\nclass StorageLocalStorage extends StorageInterface {\n\n\t/**\n\t * Reads a object from Local Storage\n\t *\n\t * @param  {String} key Identifier\n\t * @return {Promise}\n\t */\n\tread(key) {\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\tconst json = localStorage.getItem(key);\n\t\t\tconst object = JSON.parse(json);\n\t\t\tfulfill(object);\n\t\t});\n\t\treturn promise;\n\t}\n\n\t/**\n\t * Saves a object to local storage\n\t *\n\t * @param  {String} key Identifier\n\t * @param  {Object} object data to save\n\t * @return {Promise}\n\t */\n\tsave(key, object) {\n\t\tconst json = JSON.stringify(object);\n\t\tconst that = this;\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\ttry {\n\t\t\t\tlocalStorage.setItem(key, json);\n\t\t\t\tfulfill(that);\n\t\t\t} catch (error) {\n\t\t\t\treject(error);\n\t\t\t}\n\t\t});\n\t\treturn promise;\n\t}\n\n\t// _available(type) {\n\t// if(typeof(Storage) !== \"undefined\") {\n    // Code for localStorage/sessionStorage.\n\t// } else {\n\t//     // Sorry! No Web Storage support..\n\t// }\n\t// \ttry {\n\t// \t\tvar storage = window[type],\n\t// \t\t\tx = '__storage_test__';\n\t// \t\tstorage.setItem(x, x);\n\t// \t\tstorage.removeItem(x);\n\t// \t\treturn true;\n\t// \t}\n\t// \tcatch(e) {\n\t// \t\treturn false;\n\t// \t}\n\t// }\n}\n\nexport default new StorageLocalStorage();\n\n"
   },
   {
-    "__docId__": 37,
+    "__docId__": 40,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -954,7 +1042,7 @@
     ]
   },
   {
-    "__docId__": 38,
+    "__docId__": 41,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -987,7 +1075,7 @@
     "generator": false
   },
   {
-    "__docId__": 39,
+    "__docId__": 42,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -1030,7 +1118,7 @@
     "generator": false
   },
   {
-    "__docId__": 40,
+    "__docId__": 43,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1051,7 +1139,60 @@
     }
   },
   {
-    "__docId__": 41,
+    "__docId__": 44,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "app/components/cart/src/storage/storage.js",
+    "memberof": null,
+    "longname": "app/components/cart/src/storage/storage.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 6,
+    "content": "/**\n * Storage fabric\n * @param  {String} type Type of engine. Can be cookie, localstorage\n * @return {Storage} Instance of a storage enging having .read(key) and .save(key, value)\n */\nconst storage = type => {\n\ttry {\n\t\tconst storageEngine = require(`./storage-${type}`);\n\t\treturn storageEngine.default;\n\t} catch (error) {\n\t\tthrow new Error(`Unknown storage engine ${type}. Msg: ${error}`);\n\t}\n};\n\nexport default storage;\n"
+  },
+  {
+    "__docId__": 45,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "storage",
+    "memberof": "app/components/cart/src/storage/storage.js",
+    "longname": "app/components/cart/src/storage/storage.js~storage",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/storage/storage.js",
+    "importStyle": "storage",
+    "description": "Storage fabric",
+    "lineNumber": 6,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "type",
+        "description": "Type of engine. Can be cookie, localstorage"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Storage"
+      ],
+      "spread": false,
+      "description": "Instance of a storage enging having .read(key) and .save(key, value)"
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 46,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1064,7 +1205,7 @@
     "content": "/* esversion: 6 */\nimport 'style-loader!css-loader!!sass-loader!../styles/app.scss';\nimport '../../node_modules/bootstrap/dist/js/bootstrap';\n// import Cart from '../components/cart/src/cart';\n// import cookie from '../components/cart/src/storage/cookie';\n\n// const options = {\n// \tidentifier: 'id'\n// };\n\n// cart\n\t// .use(cookie)\n\t// .init(options);\n"
   },
   {
-    "__docId__": 43,
+    "__docId__": 48,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1077,7 +1218,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 44,
+    "__docId__": 49,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1090,7 +1231,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 45,
+    "__docId__": 50,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1103,7 +1244,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 46,
+    "__docId__": 51,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1116,7 +1257,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 47,
+    "__docId__": 52,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1129,7 +1270,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 48,
+    "__docId__": 53,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1142,7 +1283,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 49,
+    "__docId__": 54,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1155,7 +1296,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 50,
+    "__docId__": 55,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1168,7 +1309,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 51,
+    "__docId__": 56,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1181,7 +1322,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 52,
+    "__docId__": 57,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1194,7 +1335,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 53,
+    "__docId__": 58,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1207,7 +1348,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 54,
+    "__docId__": 59,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1220,7 +1361,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 55,
+    "__docId__": 60,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1233,7 +1374,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 56,
+    "__docId__": 61,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1246,7 +1387,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 57,
+    "__docId__": 62,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1259,7 +1400,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 58,
+    "__docId__": 63,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1272,7 +1413,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 59,
+    "__docId__": 64,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1285,7 +1426,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 60,
+    "__docId__": 65,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1298,7 +1439,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 61,
+    "__docId__": 66,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1311,7 +1452,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 62,
+    "__docId__": 67,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1324,7 +1465,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 63,
+    "__docId__": 68,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1337,7 +1478,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 64,
+    "__docId__": 69,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1350,7 +1491,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 65,
+    "__docId__": 70,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1363,7 +1504,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 66,
+    "__docId__": 71,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1376,7 +1517,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 67,
+    "__docId__": 72,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1389,7 +1530,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 68,
+    "__docId__": 73,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1402,7 +1543,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 69,
+    "__docId__": 74,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1415,7 +1556,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 70,
+    "__docId__": 75,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1428,7 +1569,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 71,
+    "__docId__": 76,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1441,7 +1582,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 72,
+    "__docId__": 77,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1454,7 +1595,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 73,
+    "__docId__": 78,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1467,7 +1608,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 74,
+    "__docId__": 79,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1480,7 +1621,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 75,
+    "__docId__": 80,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1493,7 +1634,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 76,
+    "__docId__": 81,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1506,7 +1647,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 77,
+    "__docId__": 82,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1519,7 +1660,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 78,
+    "__docId__": 83,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1532,7 +1673,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 79,
+    "__docId__": 84,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1545,7 +1686,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 80,
+    "__docId__": 85,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1558,7 +1699,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 81,
+    "__docId__": 86,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1571,7 +1712,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 82,
+    "__docId__": 87,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1584,7 +1725,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 83,
+    "__docId__": 88,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1597,7 +1738,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 84,
+    "__docId__": 89,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1610,7 +1751,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 85,
+    "__docId__": 90,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1623,7 +1764,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 86,
+    "__docId__": 91,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1636,7 +1777,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 87,
+    "__docId__": 92,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1649,7 +1790,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 88,
+    "__docId__": 93,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1662,7 +1803,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 89,
+    "__docId__": 94,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1675,7 +1816,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 91,
+    "__docId__": 96,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1688,7 +1829,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 92,
+    "__docId__": 97,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1701,7 +1842,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 93,
+    "__docId__": 98,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1714,7 +1855,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 94,
+    "__docId__": 99,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1727,7 +1868,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 95,
+    "__docId__": 100,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1740,7 +1881,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 96,
+    "__docId__": 101,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1753,7 +1894,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 97,
+    "__docId__": 102,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1766,7 +1907,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 98,
+    "__docId__": 103,
     "kind": "external",
     "static": true,
     "variation": null,

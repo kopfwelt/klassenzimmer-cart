@@ -31,16 +31,16 @@
               "type": "Identifier",
               "name": "read",
               "range": [
-                101,
-                105
+                123,
+                127
               ],
               "loc": {
                 "start": {
-                  "line": 11,
+                  "line": 12,
                   "column": 1
                 },
                 "end": {
-                  "line": 11,
+                  "line": 12,
                   "column": 5
                 }
               }
@@ -53,16 +53,16 @@
                   "type": "Identifier",
                   "name": "key",
                   "range": [
-                    106,
-                    109
+                    128,
+                    131
                   ],
                   "loc": {
                     "start": {
-                      "line": 11,
+                      "line": 12,
                       "column": 6
                     },
                     "end": {
-                      "line": 11,
+                      "line": 12,
                       "column": 9
                     }
                   }
@@ -72,16 +72,16 @@
                 "type": "BlockStatement",
                 "body": [],
                 "range": [
-                  111,
-                  113
+                  133,
+                  135
                 ],
                 "loc": {
                   "start": {
-                    "line": 11,
+                    "line": 12,
                     "column": 11
                   },
                   "end": {
-                    "line": 11,
+                    "line": 12,
                     "column": 13
                   }
                 }
@@ -89,16 +89,16 @@
               "generator": false,
               "expression": false,
               "range": [
-                105,
-                113
+                127,
+                135
               ],
               "loc": {
                 "start": {
-                  "line": 11,
+                  "line": 12,
                   "column": 5
                 },
                 "end": {
-                  "line": 11,
+                  "line": 12,
                   "column": 13
                 }
               }
@@ -106,26 +106,26 @@
             "kind": "method",
             "computed": false,
             "range": [
-              101,
-              113
+              123,
+              135
             ],
             "loc": {
               "start": {
-                "line": 11,
+                "line": 12,
                 "column": 1
               },
               "end": {
-                "line": 11,
+                "line": 12,
                 "column": 13
               }
             },
             "leadingComments": [
               {
                 "type": "Block",
-                "value": "*\n\t * Returns a saved string\n\t ",
+                "value": "*\n\t * Returns a saved string\n\t * @return {Promise}\n\t ",
                 "range": [
                   64,
-                  99
+                  121
                 ],
                 "loc": {
                   "start": {
@@ -133,7 +133,7 @@
                     "column": 1
                   },
                   "end": {
-                    "line": 10,
+                    "line": 11,
                     "column": 4
                   }
                 }
@@ -142,18 +142,18 @@
             "trailingComments": [
               {
                 "type": "Block",
-                "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t ",
+                "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t * @return {Promise}\n\t ",
                 "range": [
-                  116,
-                  259
+                  138,
+                  303
                 ],
                 "loc": {
                   "start": {
-                    "line": 13,
+                    "line": 14,
                     "column": 1
                   },
                   "end": {
-                    "line": 18,
+                    "line": 20,
                     "column": 4
                   }
                 }
@@ -167,16 +167,16 @@
               "type": "Identifier",
               "name": "save",
               "range": [
-                261,
-                265
+                305,
+                309
               ],
               "loc": {
                 "start": {
-                  "line": 19,
+                  "line": 21,
                   "column": 1
                 },
                 "end": {
-                  "line": 19,
+                  "line": 21,
                   "column": 5
                 }
               }
@@ -189,16 +189,16 @@
                   "type": "Identifier",
                   "name": "key",
                   "range": [
-                    266,
-                    269
+                    310,
+                    313
                   ],
                   "loc": {
                     "start": {
-                      "line": 19,
+                      "line": 21,
                       "column": 6
                     },
                     "end": {
-                      "line": 19,
+                      "line": 21,
                       "column": 9
                     }
                   }
@@ -209,16 +209,16 @@
                     "type": "Identifier",
                     "name": "object",
                     "range": [
-                      271,
-                      277
+                      315,
+                      321
                     ],
                     "loc": {
                       "start": {
-                        "line": 19,
+                        "line": 21,
                         "column": 11
                       },
                       "end": {
-                        "line": 19,
+                        "line": 21,
                         "column": 17
                       }
                     }
@@ -227,31 +227,31 @@
                     "type": "ObjectExpression",
                     "properties": [],
                     "range": [
-                      280,
-                      282
+                      324,
+                      326
                     ],
                     "loc": {
                       "start": {
-                        "line": 19,
+                        "line": 21,
                         "column": 20
                       },
                       "end": {
-                        "line": 19,
+                        "line": 21,
                         "column": 22
                       }
                     }
                   },
                   "range": [
-                    271,
-                    282
+                    315,
+                    326
                   ],
                   "loc": {
                     "start": {
-                      "line": 19,
+                      "line": 21,
                       "column": 11
                     },
                     "end": {
-                      "line": 19,
+                      "line": 21,
                       "column": 22
                     }
                   }
@@ -261,16 +261,16 @@
                 "type": "BlockStatement",
                 "body": [],
                 "range": [
-                  284,
-                  286
+                  328,
+                  330
                 ],
                 "loc": {
                   "start": {
-                    "line": 19,
+                    "line": 21,
                     "column": 24
                   },
                   "end": {
-                    "line": 19,
+                    "line": 21,
                     "column": 26
                   }
                 }
@@ -278,16 +278,16 @@
               "generator": false,
               "expression": false,
               "range": [
-                265,
-                286
+                309,
+                330
               ],
               "loc": {
                 "start": {
-                  "line": 19,
+                  "line": 21,
                   "column": 5
                 },
                 "end": {
-                  "line": 19,
+                  "line": 21,
                   "column": 26
                 }
               }
@@ -295,34 +295,151 @@
             "kind": "method",
             "computed": false,
             "range": [
-              261,
-              286
+              305,
+              330
             ],
             "loc": {
               "start": {
-                "line": 19,
+                "line": 21,
                 "column": 1
               },
               "end": {
-                "line": 19,
+                "line": 21,
                 "column": 26
               }
             },
             "leadingComments": [
               {
                 "type": "Block",
-                "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t ",
+                "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t * @return {Promise}\n\t ",
                 "range": [
-                  116,
-                  259
+                  138,
+                  303
                 ],
                 "loc": {
                   "start": {
-                    "line": 13,
+                    "line": 14,
                     "column": 1
                   },
                   "end": {
-                    "line": 18,
+                    "line": 20,
+                    "column": 4
+                  }
+                }
+              }
+            ],
+            "trailingComments": [
+              {
+                "type": "Block",
+                "value": "*\n\t * Clears the storage\n\t * @return {Promise}\n\t ",
+                "range": [
+                  333,
+                  386
+                ],
+                "loc": {
+                  "start": {
+                    "line": 23,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 26,
+                    "column": 4
+                  }
+                }
+              }
+            ],
+            "static": false
+          },
+          {
+            "type": "MethodDefinition",
+            "key": {
+              "type": "Identifier",
+              "name": "clear",
+              "range": [
+                388,
+                393
+              ],
+              "loc": {
+                "start": {
+                  "line": 27,
+                  "column": 1
+                },
+                "end": {
+                  "line": 27,
+                  "column": 6
+                }
+              }
+            },
+            "value": {
+              "type": "FunctionExpression",
+              "id": null,
+              "params": [],
+              "body": {
+                "type": "BlockStatement",
+                "body": [],
+                "range": [
+                  396,
+                  398
+                ],
+                "loc": {
+                  "start": {
+                    "line": 27,
+                    "column": 9
+                  },
+                  "end": {
+                    "line": 27,
+                    "column": 11
+                  }
+                }
+              },
+              "generator": false,
+              "expression": false,
+              "range": [
+                393,
+                398
+              ],
+              "loc": {
+                "start": {
+                  "line": 27,
+                  "column": 6
+                },
+                "end": {
+                  "line": 27,
+                  "column": 11
+                }
+              }
+            },
+            "kind": "method",
+            "computed": false,
+            "range": [
+              388,
+              398
+            ],
+            "loc": {
+              "start": {
+                "line": 27,
+                "column": 1
+              },
+              "end": {
+                "line": 27,
+                "column": 11
+              }
+            },
+            "leadingComments": [
+              {
+                "type": "Block",
+                "value": "*\n\t * Clears the storage\n\t * @return {Promise}\n\t ",
+                "range": [
+                  333,
+                  386
+                ],
+                "loc": {
+                  "start": {
+                    "line": 23,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 26,
                     "column": 4
                   }
                 }
@@ -333,7 +450,7 @@
         ],
         "range": [
           60,
-          289
+          401
         ],
         "loc": {
           "start": {
@@ -341,14 +458,14 @@
             "column": 14
           },
           "end": {
-            "line": 21,
+            "line": 29,
             "column": 1
           }
         }
       },
       "range": [
         46,
-        289
+        401
       ],
       "loc": {
         "start": {
@@ -356,7 +473,7 @@
           "column": 0
         },
         "end": {
-          "line": 21,
+          "line": 29,
           "column": 1
         }
       },
@@ -370,31 +487,31 @@
         "type": "Identifier",
         "name": "Storage",
         "range": [
-          306,
-          313
+          418,
+          425
         ],
         "loc": {
           "start": {
-            "line": 23,
+            "line": 31,
             "column": 15
           },
           "end": {
-            "line": 23,
+            "line": 31,
             "column": 22
           }
         }
       },
       "range": [
-        291,
-        314
+        403,
+        426
       ],
       "loc": {
         "start": {
-          "line": 23,
+          "line": 31,
           "column": 0
         },
         "end": {
-          "line": 23,
+          "line": 31,
           "column": 23
         }
       },
@@ -434,16 +551,16 @@
                 "type": "Identifier",
                 "name": "read",
                 "range": [
-                  101,
-                  105
+                  123,
+                  127
                 ],
                 "loc": {
                   "start": {
-                    "line": 11,
+                    "line": 12,
                     "column": 1
                   },
                   "end": {
-                    "line": 11,
+                    "line": 12,
                     "column": 5
                   }
                 }
@@ -456,16 +573,16 @@
                     "type": "Identifier",
                     "name": "key",
                     "range": [
-                      106,
-                      109
+                      128,
+                      131
                     ],
                     "loc": {
                       "start": {
-                        "line": 11,
+                        "line": 12,
                         "column": 6
                       },
                       "end": {
-                        "line": 11,
+                        "line": 12,
                         "column": 9
                       }
                     }
@@ -475,16 +592,16 @@
                   "type": "BlockStatement",
                   "body": [],
                   "range": [
-                    111,
-                    113
+                    133,
+                    135
                   ],
                   "loc": {
                     "start": {
-                      "line": 11,
+                      "line": 12,
                       "column": 11
                     },
                     "end": {
-                      "line": 11,
+                      "line": 12,
                       "column": 13
                     }
                   }
@@ -492,16 +609,16 @@
                 "generator": false,
                 "expression": false,
                 "range": [
-                  105,
-                  113
+                  127,
+                  135
                 ],
                 "loc": {
                   "start": {
-                    "line": 11,
+                    "line": 12,
                     "column": 5
                   },
                   "end": {
-                    "line": 11,
+                    "line": 12,
                     "column": 13
                   }
                 }
@@ -509,26 +626,26 @@
               "kind": "method",
               "computed": false,
               "range": [
-                101,
-                113
+                123,
+                135
               ],
               "loc": {
                 "start": {
-                  "line": 11,
+                  "line": 12,
                   "column": 1
                 },
                 "end": {
-                  "line": 11,
+                  "line": 12,
                   "column": 13
                 }
               },
               "leadingComments": [
                 {
                   "type": "Block",
-                  "value": "*\n\t * Returns a saved string\n\t ",
+                  "value": "*\n\t * Returns a saved string\n\t * @return {Promise}\n\t ",
                   "range": [
                     64,
-                    99
+                    121
                   ],
                   "loc": {
                     "start": {
@@ -536,7 +653,7 @@
                       "column": 1
                     },
                     "end": {
-                      "line": 10,
+                      "line": 11,
                       "column": 4
                     }
                   }
@@ -545,18 +662,18 @@
               "trailingComments": [
                 {
                   "type": "Block",
-                  "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t ",
+                  "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t * @return {Promise}\n\t ",
                   "range": [
-                    116,
-                    259
+                    138,
+                    303
                   ],
                   "loc": {
                     "start": {
-                      "line": 13,
+                      "line": 14,
                       "column": 1
                     },
                     "end": {
-                      "line": 18,
+                      "line": 20,
                       "column": 4
                     }
                   }
@@ -570,16 +687,16 @@
                 "type": "Identifier",
                 "name": "save",
                 "range": [
-                  261,
-                  265
+                  305,
+                  309
                 ],
                 "loc": {
                   "start": {
-                    "line": 19,
+                    "line": 21,
                     "column": 1
                   },
                   "end": {
-                    "line": 19,
+                    "line": 21,
                     "column": 5
                   }
                 }
@@ -592,16 +709,16 @@
                     "type": "Identifier",
                     "name": "key",
                     "range": [
-                      266,
-                      269
+                      310,
+                      313
                     ],
                     "loc": {
                       "start": {
-                        "line": 19,
+                        "line": 21,
                         "column": 6
                       },
                       "end": {
-                        "line": 19,
+                        "line": 21,
                         "column": 9
                       }
                     }
@@ -612,16 +729,16 @@
                       "type": "Identifier",
                       "name": "object",
                       "range": [
-                        271,
-                        277
+                        315,
+                        321
                       ],
                       "loc": {
                         "start": {
-                          "line": 19,
+                          "line": 21,
                           "column": 11
                         },
                         "end": {
-                          "line": 19,
+                          "line": 21,
                           "column": 17
                         }
                       }
@@ -630,31 +747,31 @@
                       "type": "ObjectExpression",
                       "properties": [],
                       "range": [
-                        280,
-                        282
+                        324,
+                        326
                       ],
                       "loc": {
                         "start": {
-                          "line": 19,
+                          "line": 21,
                           "column": 20
                         },
                         "end": {
-                          "line": 19,
+                          "line": 21,
                           "column": 22
                         }
                       }
                     },
                     "range": [
-                      271,
-                      282
+                      315,
+                      326
                     ],
                     "loc": {
                       "start": {
-                        "line": 19,
+                        "line": 21,
                         "column": 11
                       },
                       "end": {
-                        "line": 19,
+                        "line": 21,
                         "column": 22
                       }
                     }
@@ -664,16 +781,16 @@
                   "type": "BlockStatement",
                   "body": [],
                   "range": [
-                    284,
-                    286
+                    328,
+                    330
                   ],
                   "loc": {
                     "start": {
-                      "line": 19,
+                      "line": 21,
                       "column": 24
                     },
                     "end": {
-                      "line": 19,
+                      "line": 21,
                       "column": 26
                     }
                   }
@@ -681,16 +798,16 @@
                 "generator": false,
                 "expression": false,
                 "range": [
-                  265,
-                  286
+                  309,
+                  330
                 ],
                 "loc": {
                   "start": {
-                    "line": 19,
+                    "line": 21,
                     "column": 5
                   },
                   "end": {
-                    "line": 19,
+                    "line": 21,
                     "column": 26
                   }
                 }
@@ -698,34 +815,151 @@
               "kind": "method",
               "computed": false,
               "range": [
-                261,
-                286
+                305,
+                330
               ],
               "loc": {
                 "start": {
-                  "line": 19,
+                  "line": 21,
                   "column": 1
                 },
                 "end": {
-                  "line": 19,
+                  "line": 21,
                   "column": 26
                 }
               },
               "leadingComments": [
                 {
                   "type": "Block",
-                  "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t ",
+                  "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t * @return {Promise}\n\t ",
                   "range": [
-                    116,
-                    259
+                    138,
+                    303
                   ],
                   "loc": {
                     "start": {
-                      "line": 13,
+                      "line": 14,
                       "column": 1
                     },
                     "end": {
-                      "line": 18,
+                      "line": 20,
+                      "column": 4
+                    }
+                  }
+                }
+              ],
+              "trailingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n\t * Clears the storage\n\t * @return {Promise}\n\t ",
+                  "range": [
+                    333,
+                    386
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 23,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 26,
+                      "column": 4
+                    }
+                  }
+                }
+              ],
+              "static": false
+            },
+            {
+              "type": "MethodDefinition",
+              "key": {
+                "type": "Identifier",
+                "name": "clear",
+                "range": [
+                  388,
+                  393
+                ],
+                "loc": {
+                  "start": {
+                    "line": 27,
+                    "column": 1
+                  },
+                  "end": {
+                    "line": 27,
+                    "column": 6
+                  }
+                }
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [],
+                  "range": [
+                    396,
+                    398
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 27,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 27,
+                      "column": 11
+                    }
+                  }
+                },
+                "generator": false,
+                "expression": false,
+                "range": [
+                  393,
+                  398
+                ],
+                "loc": {
+                  "start": {
+                    "line": 27,
+                    "column": 6
+                  },
+                  "end": {
+                    "line": 27,
+                    "column": 11
+                  }
+                }
+              },
+              "kind": "method",
+              "computed": false,
+              "range": [
+                388,
+                398
+              ],
+              "loc": {
+                "start": {
+                  "line": 27,
+                  "column": 1
+                },
+                "end": {
+                  "line": 27,
+                  "column": 11
+                }
+              },
+              "leadingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n\t * Clears the storage\n\t * @return {Promise}\n\t ",
+                  "range": [
+                    333,
+                    386
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 23,
+                      "column": 1
+                    },
+                    "end": {
+                      "line": 26,
                       "column": 4
                     }
                   }
@@ -736,7 +970,7 @@
           ],
           "range": [
             60,
-            289
+            401
           ],
           "loc": {
             "start": {
@@ -744,14 +978,14 @@
               "column": 14
             },
             "end": {
-              "line": 21,
+              "line": 29,
               "column": 1
             }
           }
         },
         "range": [
           46,
-          289
+          401
         ],
         "loc": {
           "start": {
@@ -759,7 +993,7 @@
             "column": 0
           },
           "end": {
-            "line": 21,
+            "line": 29,
             "column": 1
           }
         },
@@ -787,16 +1021,16 @@
         "trailingComments": []
       },
       "range": [
-        291,
-        314
+        403,
+        426
       ],
       "loc": {
         "start": {
-          "line": 23,
+          "line": 31,
           "column": 0
         },
         "end": {
-          "line": 23,
+          "line": 31,
           "column": 23
         }
       },
@@ -806,7 +1040,7 @@
   "sourceType": "module",
   "range": [
     46,
-    314
+    426
   ],
   "loc": {
     "start": {
@@ -814,7 +1048,7 @@
       "column": 0
     },
     "end": {
-      "line": 23,
+      "line": 31,
       "column": 23
     }
   },
@@ -839,10 +1073,10 @@
     },
     {
       "type": "Block",
-      "value": "*\n\t * Returns a saved string\n\t ",
+      "value": "*\n\t * Returns a saved string\n\t * @return {Promise}\n\t ",
       "range": [
         64,
-        99
+        121
       ],
       "loc": {
         "start": {
@@ -850,25 +1084,43 @@
           "column": 1
         },
         "end": {
-          "line": 10,
+          "line": 11,
           "column": 4
         }
       }
     },
     {
       "type": "Block",
-      "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t ",
+      "value": "*\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t * @return {Promise}\n\t ",
       "range": [
-        116,
-        259
+        138,
+        303
       ],
       "loc": {
         "start": {
-          "line": 13,
+          "line": 14,
           "column": 1
         },
         "end": {
-          "line": 18,
+          "line": 20,
+          "column": 4
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n\t * Clears the storage\n\t * @return {Promise}\n\t ",
+      "range": [
+        333,
+        386
+      ],
+      "loc": {
+        "start": {
+          "line": 23,
+          "column": 1
+        },
+        "end": {
+          "line": 26,
           "column": 4
         }
       }

@@ -30,6 +30,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "klassenzimmer-cart/app/components/cart/src/storage/storage.js~storage",
+    "variable/index.html#static-variable-storage",
+    "<span>storage</span> <span class=\"search-result-import-path\">klassenzimmer-cart/app/components/cart/src/storage/storage.js</span>",
+    "variable"
+  ],
+  [
     "klassenzimmer-cart/app/components/cart/src/storage/storage-cookie.js~storagecookie",
     "variable/index.html#static-variable-storageCookie",
     "<span>storageCookie</span> <span class=\"search-result-import-path\">klassenzimmer-cart/app/components/cart/src/storage/storage-cookie.js</span>",
@@ -432,6 +438,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "app/components/cart/src/cart.js~cart#set",
+    "class/app/components/cart/src/cart.js~Cart.html#instance-method-set",
+    "app/components/cart/src/cart.js~Cart#set",
+    "method"
+  ],
+  [
     "app/components/cart/src/cart.js~cart#use",
     "class/app/components/cart/src/cart.js~Cart.html#instance-method-use",
     "app/components/cart/src/cart.js~Cart#use",
@@ -486,6 +498,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "app/components/cart/src/storage/storage-interface.js~storage#clear",
+    "class/app/components/cart/src/storage/storage-interface.js~Storage.html#instance-method-clear",
+    "app/components/cart/src/storage/storage-interface.js~Storage#clear",
+    "method"
+  ],
+  [
     "app/components/cart/src/storage/storage-interface.js~storage#read",
     "class/app/components/cart/src/storage/storage-interface.js~Storage.html#instance-method-read",
     "app/components/cart/src/storage/storage-interface.js~Storage#read",
@@ -514,6 +532,12 @@ window.esdocSearchIndex = [
     "class/app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage.html#instance-method-save",
     "app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage#save",
     "method"
+  ],
+  [
+    "app/components/cart/src/storage/storage.js",
+    "file/app/components/cart/src/storage/storage.js.html",
+    "app/components/cart/src/storage/storage.js",
+    "file"
   ],
   [
     "app/scripts/app.js",

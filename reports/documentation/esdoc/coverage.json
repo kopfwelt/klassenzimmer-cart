@@ -1,11 +1,11 @@
 {
-  "coverage": "92.3%",
-  "expectCount": 26,
-  "actualCount": 24,
+  "coverage": "93.1%",
+  "expectCount": 29,
+  "actualCount": 27,
   "files": {
     "app/components/cart/src/cart.js": {
-      "expectCount": 8,
-      "actualCount": 8,
+      "expectCount": 9,
+      "actualCount": 9,
       "undocumentLines": []
     },
     "app/components/cart/src/cart-sorted.js": {
@@ -14,8 +14,8 @@
       "undocumentLines": []
     },
     "app/components/cart/src/storage/storage-interface.js": {
-      "expectCount": 3,
-      "actualCount": 3,
+      "expectCount": 4,
+      "actualCount": 4,
       "undocumentLines": []
     },
     "app/components/cart/src/storage/storage-cookie.js": {
@@ -31,6 +31,11 @@
       "undocumentLines": [
         64
       ]
+    },
+    "app/components/cart/src/storage/storage.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
     }
   }
 }
