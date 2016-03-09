@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>storage/storage-cookie.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#add">add</a></li><li data-type='method'><a href="Cart.html#clear">clear</a></li><li data-type='method'><a href="Cart.html#get">get</a></li><li data-type='method'><a href="Cart.html#init">init</a></li><li data-type='method'><a href="Cart.html#remove">remove</a></li><li data-type='method'><a href="Cart.html#use">use</a></li></ul></li><li><a href="CartSorted.html">CartSorted</a><ul class='methods'><li data-type='method'><a href="CartSorted.html#add">add</a></li></ul></li><li><a href="StorageCookie.html">StorageCookie</a><ul class='methods'><li data-type='method'><a href="StorageCookie.html#all">all</a></li><li data-type='method'><a href="StorageCookie.html#decode">decode</a></li><li data-type='method'><a href="StorageCookie.html#encode">encode</a></li><li data-type='method'><a href="StorageCookie.html#parse">parse</a></li><li data-type='method'><a href="StorageCookie.html#read">read</a></li><li data-type='method'><a href="StorageCookie.html#save">save</a></li></ul></li><li><a href="StorageLocalStorage.html">StorageLocalStorage</a><ul class='methods'><li data-type='method'><a href="StorageLocalStorage.html#read">read</a></li><li data-type='method'><a href="StorageLocalStorage.html#save">save</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="Storage.html">Storage</a><ul class='methods'><li data-type='method'><a href="Storage.html#read">read</a></li><li data-type='method'><a href="Storage.html#save">save</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">storage/storage-cookie.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import StorageInterface from './storage-interface';
+
+/**
+ * @extends {Storage}
+ */
+class StorageCookie extends StorageInterface {
+
+	/**
+	 * Reads a cookie key
+	 *
+	 * @param  {String} key Identifier
+	 * @return {Promise}
+	 */
+	read(key) {
+		const that = this;
+		const promise = new Promise((fulfill, reject) => {
+			const cookies = that.all();
+
+			if (cookies) {
+				const json = cookies[key];
+				const object = JSON.parse(json);
+				fulfill(object);
+			} else {
+				reject();
+			}
+		});
+
+		return promise;
+	}
+
+	/**
+	 * Saves a cookie
+	 *
+	 * @param  {String} key Identifier
+	 * @param  {Object} object Data to save
+	 * @param  {Object} options
+	 * @return {Promise}
+	 */
+	save(key, object, options = {}) {
+		const json = JSON.stringify(object);
+		const promise = new Promise((fulfill, reject) => {
+			try {
+				let str = `${this.encode(key)}=${this.encode(json)}`;
+
+				if (object === null) {
+					options.expiry = -1;
+				}
+
+				if (options.expiry &amp;&amp; !options.expires) {
+					options.expires = new Date(+new Date() + options.expiry);
+				}
+
+				if (options.path) {
+					str += `; path=${options.path}`;
+				}
+
+				if (options.domain) {
+					str += `; domain=${options.domain}`;
+				}
+
+				if (options.expires) {
+					str += `; expires=${options.expires.toUTCString()}`;
+				}
+
+				if (options.secure) {
+					str += '; secure';
+				}
+
+				document.cookie = str;
+				fulfill();
+			} catch (error) {
+				reject(error);
+			}
+		});
+
+		return promise;
+	}
+
+	/**
+	 * Return complete cookie as object
+	 *
+	 * @return {Object}
+	 */
+	all() {
+		return this.parse(document.cookie);
+	}
+
+	/**
+	 * Parses cookie
+	 *
+	 * @param  {String} str
+	 * @return {Object}
+	 */
+	parse(str) {
+		const obj = {};
+		const pairs = str.split(/ *; */);
+		let pair = null;
+
+		if (pairs[0] === '') {
+			return obj;
+		}
+
+		for (let i = 0; i &lt; pairs.length; ++i) {
+			pair = pairs[i].split('=');
+			obj[this.decode(pair[0])] = this.decode(pair[1]);
+		}
+
+		return obj;
+	}
+
+	/**
+	 * Url encodes string
+	 *
+	 * @param  {String} value
+	 * @return {String|null}
+	 */
+	encode(value) {
+		try {
+			return encodeURIComponent(value);
+		} catch (e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Url encodes string
+	 *
+	 * @param  {String} value
+	 * @return {String|null}
+	 */
+	decode(value) {
+		try {
+			return decodeURIComponent(value);
+		} catch (e) {
+			return null;
+		}
+	}
+}
+
+export default new StorageCookie();</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Mar 08 2016 23:10:24 GMT+0100 (CET) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

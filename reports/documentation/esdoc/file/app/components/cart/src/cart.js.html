@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../../">
+  <title data-ice="title">app/components/cart/src/cart.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components/cart/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/cart-sorted.js~CartSorted.html">CartSorted</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/cart.js~Cart.html">Cart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components/cart/src/storage</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/storage/storage-cookie.js~StorageCookie.html">StorageCookie</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage.html">StorageLocalStorage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/app/components/cart/src/storage/storage-interface.js~Storage.html">Storage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-storageCookie">storageCookie</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-storageLocalStorage">storageLocalStorage</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">app/components/cart/src/cart.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Handles objects and provides simple cart interface.
+ * Use it together with storage enginges to create persistancy
+ *
+ * @class
+ */
+class Cart {
+
+	/**
+	 * @constructor
+	 */
+	constructor() {
+		this._items = [];
+		this._options = [];
+		this._storage = undefined;
+	}
+
+	/**
+	 * Set storage engine
+	 *
+	 * @param  {Storage} engine Set storage enginge for use of cookie, localstorage, ...
+	 * @return {Cart}        Cart instance this
+	 */
+	use(engine) {
+		this._storage = engine;
+
+		return this;
+	}
+
+	/**
+	 * Init cart by passing options.
+	 *
+	 * @param  {Object} options [description]
+	 * @return {Cart}        Cart instance this
+	 */
+	init(options = {}) {
+		this._options = options;
+		// this._items = this._read();
+
+		return this;
+	}
+
+	/**
+	 * Returns plain cart items
+	 *
+	 * @return {Array} Cart items
+	 */
+	get() {
+		return this._items;
+	}
+
+	/**
+	 * Adds an item to the cart
+	 *
+	 * @param {Object} item  Can be any object, but must have an unique id
+	 * @param {Number} count Amount of the item you want to add
+	 * @return {Cart}        Cart instance this
+	 */
+	add(item, count = 1) {
+		if (this._contains(item)) {
+			const index = this._index(item);
+			this._items[index].count += count;
+		} else {
+			this._items.push({item, count});
+		}
+		// this._save(this._items);
+
+		return this;
+	}
+
+	/**
+	 * Removes an item from the cart
+	 *
+	 * @param  {Object} item An object already added to the cart
+	 * @return {Cart}        Cart instance this
+	 */
+	remove(item) {
+		if (this._contains(item)) {
+			const index = this._index(item);
+			this._items.splice(index, 1);
+		}
+
+		return this;
+	}
+
+	/**
+	 * Empties the cart
+	 *
+	 * @return {Cart}        Cart instance this
+	 */
+	clear() {
+		this._items = [];
+
+		return this;
+	}
+
+	/**
+	 * Checks if an item exists in the carts
+	 *
+	 * @param  {Objext} item
+	 * @return {Boolean}
+	 * @private
+	 */
+	_contains(item) {
+		let contains = false;
+		const uniqueId = this._options[&apos;uniqueId&apos;];
+		for (let i = 0; i &lt; this._items.length; i++) {
+			if (this._items[i].item[uniqueId] === item[uniqueId]) {
+				contains = true;
+			}
+		}
+
+		return contains;
+	}
+
+	/**
+	 * Returns the index of an item in the cart
+	 *
+	 * @param  {Object} item
+	 * @return {Integer}
+	 * @private
+	 */
+	_index(item) {
+		let index = 0;
+		const uniqueId = this._options[&apos;uniqueId&apos;];
+		for (let i = 0; i &lt; this._items.length; i++) {
+			if (this._items[i].item[uniqueId] === item[uniqueId]) {
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	/**
+	 * Returns saved items
+	 *
+	 * @return {Array} Saved items
+	 * @private
+	 */
+	_read() {
+		if (typeof this._storage !== &apos;undefined&apos;) {
+			return this._storage.read(&apos;cart&apos;);
+		}
+	}
+
+	/**
+	 * Saves items
+	 *
+	 * @private
+	 */
+	_save() {
+		if (typeof this._storage !== &apos;undefined&apos;) {
+			return this._storage.save(&apos;cart&apos;, this.items);
+		}
+	}
+
+}
+
+export default Cart;
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.5)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

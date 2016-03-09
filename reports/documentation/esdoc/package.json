@@ -1,0 +1,83 @@
+{
+  "name": "klassenzimmer-cart",
+  "description": "Learn writing javascript and tests.",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "keywords": [
+    "es6",
+    "karma",
+    "metrics",
+    "report",
+    "oop"
+  ],
+  "author": {
+    "name": "Steve Sinnwell",
+    "email": "steve@kopfwelt.com",
+    "url": "http://kopfwelt.com/"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --inline",
+    "build": "webpack",
+    "all": "npm run test:once;open -g ./reports/coverage/index.html;npm run metrics;open -g ./reports/plato/index.html;npm run doc;open -g ./reports/documentation/esdoc/index.html;open -g ./reports/documentation/jsdoc/index.html",
+    "test": "karma start test/unit/karma.conf.js",
+    "test:once": "karma start test/unit/karma.conf.js --single-run",
+    "metrics": "plato -r -d reports/plato -x app/scripts/app.js -l .jshintrc -t \"Klassenzimmer Cart\" app",
+    "doc": "jsdoc -c jsdoc.json; esdoc -c esdoc.json"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.5.2",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^6.3.0",
+    "bootstrap": "github:twbs/bootstrap#v4-dev",
+    "chai": "^3.4.1",
+    "constants": "0.0.2",
+    "css-loader": "^0.23.1",
+    "fs": "0.0.2",
+    "isparta": "^4.0.0",
+    "istanbul-instrumenter-loader": "^0.2.0",
+    "jquery": "^2.2.1",
+    "jsdoc": "^3.4.0",
+    "karma": "^0.13.15",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "github:douglasduteil/karma-coverage#next",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-mocha": "^0.2.1",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-sauce-launcher": "^0.3.0",
+    "karma-sinon": "^1.0.4",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-spec-reporter": "0.0.24",
+    "karma-webpack": "^1.7.0",
+    "minami": "^1.1.1",
+    "mocha": "^2.4.5",
+    "node-sass": "^3.4.2",
+    "phantomjs": "^2.1.3",
+    "sass-loader": "^3.1.2",
+    "sinon": "^1.17.2",
+    "style-loader": "^0.13.0",
+    "webpack": "^2.1.0-beta",
+    "xo": "^0.12.1"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.5.0",
+    "babel-runtime": "^6.5.0"
+  },
+  "xo": {
+    "esnext": true,
+    "envs": [
+      "browser",
+      "commonjs"
+    ],
+    "ignores": [
+      "build/**"
+    ]
+  }
+}

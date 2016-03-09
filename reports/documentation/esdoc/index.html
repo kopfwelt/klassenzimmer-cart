@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components/cart/src</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/cart-sorted.js~CartSorted.html">CartSorted</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/cart.js~Cart.html">Cart</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">components/cart/src/storage</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/storage/storage-cookie.js~StorageCookie.html">StorageCookie</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage.html">StorageLocalStorage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-interface">I</span><span data-ice="name"><span><a href="class/app/components/cart/src/storage/storage-interface.js~Storage.html">Storage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-storageCookie">storageCookie</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-storageLocalStorage">storageLocalStorage</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="cart">Cart</h1>
+<p>Create a cart class and corresponding tests.</p>
+<p>The cart should save, read and delete simple objects. As storing enging the cart should have at least two of the following options:</p>
+<ul>
+<li>Cookie</li>
+<li>Session</li>
+<li>Local storage</li>
+<li>Service worker</li>
+<li>Web SQL</li>
+</ul>
+<p>The cart implementation should be designed either as class with inheritance (baseclass, subclasses) or module following functional programming or classic OOP.</p>
+<p>The tests should cover all methods.</p>
+<h3 id="articles">Articles</h3>
+<p><a href="http://renderedtext.com/blog/2015/11/18/closures-are-not-magic/">Closures are not magic</a></p>
+<p><a href="https://www.smashingmagazine.com/2016/02/writing-next-generation-reusable-javascript-modules/">Writing Next Generation Reusable JavaScript Modules in ECMAScript 6</a></p>
+<p><a href="http://www.benfarrell.com/2015/10/26/es6-web-components-part-1-a-man-without-a-framework/">ES6 Web Components Part 1 &#x2013; A Man Without a Framework</a></p>
+<p><a href="http://blog.tighten.co/unpacking-webpack">Unpacking Webpack+</a></p>
+<p><a href="https://addyosmani.com/blog/getting-started-with-progressive-web-apps/">https://addyosmani.com/blog/getting-started-with-progressive-web-apps/</a></p>
+<p><a href="http://jonathancreamer.com/advanced-webpack-part-1-the-commonschunk-plugin/">http://jonathancreamer.com/advanced-webpack-part-1-the-commonschunk-plugin/</a></p>
+<p><a href="http://blog.codeschool.io/2015/12/02/how-we-built-code-schools-video-player-with-es2015/">http://blog.codeschool.io/2015/12/02/how-we-built-code-schools-video-player-with-es2015/</a></p>
+<p><a href="https://github.com/lyzadanger/serviceworker-example/blob/master/03-versioning/serviceWorker.js">https://github.com/lyzadanger/serviceworker-example/blob/master/03-versioning/serviceWorker.js</a></p>
+<p><a href="http://www.benfarrell.com/2015/10/26/es6-web-components-part-4-project-setup-and-opinions/">http://www.benfarrell.com/2015/10/26/es6-web-components-part-4-project-setup-and-opinions/</a></p>
+<p><a href="http://dialelo.github.io/talks/functional-programming-and-architecture-in-javascript/">http://dialelo.github.io/talks/functional-programming-and-architecture-in-javascript/</a></p>
+<p><a href="http://dmitrysoshnikov.com/tag/functional-programming/">http://dmitrysoshnikov.com/tag/functional-programming/</a></p>
+<p><a href="http://casualjavascript.com/?2">http://casualjavascript.com/?2</a></p>
+<h2 id="usage">Usage</h2>
+<p>Both command can be run parallel and do watch your files for changes.</p>
+<p><strong>Start</strong></p>
+<p><code>npm start</code></p>
+<p><strong>Test</strong></p>
+<p><code>npm test</code></p>
+<p><strong>Metrics</strong></p>
+<p><code>npm metrics</code></p>
+<h2 id="installation">Installation</h2>
+<p>Install webpack:</p>
+<pre><code><code class="source-code prettyprint">npm install webpack webpack-dev-server -g</code>
+</code></pre><p>Install <em>KARMA</em> and <a href="https://npmjs.org/browse/keyword/karma-adapter">framework adapters</a>:</p>
+<pre><code><code class="source-code prettyprint">npm install -g karma karma-browserify karma-mocha karma-chai karma-chrome-launcher karma-coverage karma-firefox-launcher karma-phantomjs-launcher karma-sauce-launcher karma-sinon</code>
+</code></pre><p>Install <em>mocha</em>, <em>chai</em>, <em>sinon</em>:</p>
+<pre><code><code class="source-code prettyprint">npm install -g mocha chai sinon</code>
+</code></pre><p>Install <em>PhantomJS</em> via homebrew (or <a href="http://phantomjs.org">direct download</a>):</p>
+<pre><code><code class="source-code prettyprint">brew update &amp;&amp; brew install phantomjs</code>
+</code></pre><p>Install <em>Plato</em>:</p>
+<p>In case plato is already installed. Remove Plato and install the ES6 fork.</p>
+<pre><code><code class="source-code prettyprint">npm uninstall plato</code>
+</code></pre><p>Install <em>Documentations</em>:</p>
+<pre><code><code class="source-code prettyprint">npm i -g esdoc jsdoc</code>
+</code></pre><p>Install the ES6 fork by <a href="https://github.com/deedubs/es6-plato">deedubs</a>:</p>
+<pre><code><code class="source-code prettyprint">npm install -g git+https://github.com/deedubs/es6-plato.git</code>
+</code></pre><h2 id="copyright">Copyright</h2>
+<p>Copyright 2016 Kopfwelt GmbH.</p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.5)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

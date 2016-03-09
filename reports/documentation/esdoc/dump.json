@@ -1,0 +1,1781 @@
+[
+  {
+    "__docId__": 0,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "app/components/cart/src/cart-sorted.js",
+    "memberof": null,
+    "longname": "app/components/cart/src/cart-sorted.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import Cart from './cart';\n\n/**\n * Extends Cart by sorted items\n *\n * @class\n */\nclass CartSorted extends Cart {\n\n\t/**\n\t * @constructor\n\t */\n\tconstructor() {\n\t\tsuper();\n\t}\n\n\t/**\n\t * Adds item to the cart and sets a position for an item\n\t *\n\t * @param {Object} item  Can be any object, but must have an unique id\n\t * @param {Number} count Amount of the item you want to add\n\t * @param {Number} position Position of the cart\n\t * @return {Cart}        Cart instance this\n\t */\n\tadd(item, count = 1, position = undefined) {\n\t\tif (typeof position === 'undefined') {\n\t\t\tthrow new Error('Position is not defined');\n\t\t}\n\n\t\tthis._items.push({item, count, position});\n\t\tsuper._save();\n\n\t\treturn this;\n\t}\n\n}\n\nexport default CartSorted;\n"
+  },
+  {
+    "__docId__": 1,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "CartSorted",
+    "memberof": "app/components/cart/src/cart-sorted.js",
+    "longname": "app/components/cart/src/cart-sorted.js~CartSorted",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/cart-sorted.js",
+    "importStyle": "CartSorted",
+    "description": "Extends Cart by sorted items",
+    "lineNumber": 8,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "app/components/cart/src/cart.js~Cart"
+    ]
+  },
+  {
+    "__docId__": 2,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "app/components/cart/src/cart-sorted.js~CartSorted",
+    "longname": "app/components/cart/src/cart-sorted.js~CartSorted#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 13,
+    "unknown": [
+      {
+        "tagName": "@constructor",
+        "tagValue": ""
+      }
+    ],
+    "params": [],
+    "generator": false
+  },
+  {
+    "__docId__": 3,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "add",
+    "memberof": "app/components/cart/src/cart-sorted.js~CartSorted",
+    "longname": "app/components/cart/src/cart-sorted.js~CartSorted#add",
+    "access": null,
+    "description": "Adds item to the cart and sets a position for an item",
+    "lineNumber": 25,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": "Can be any object, but must have an unique id"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "count",
+        "description": "Amount of the item you want to add"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "position",
+        "description": "Position of the cart"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cart"
+      ],
+      "spread": false,
+      "description": "Cart instance this"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 4,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "app/components/cart/src/cart.js",
+    "memberof": null,
+    "longname": "app/components/cart/src/cart.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 7,
+    "content": "/**\n * Handles objects and provides simple cart interface.\n * Use it together with storage enginges to create persistancy\n *\n * @class\n */\nclass Cart {\n\n\t/**\n\t * @constructor\n\t */\n\tconstructor() {\n\t\tthis._items = [];\n\t\tthis._options = [];\n\t\tthis._storage = undefined;\n\t}\n\n\t/**\n\t * Set storage engine\n\t *\n\t * @param  {Storage} engine Set storage enginge for use of cookie, localstorage, ...\n\t * @return {Cart}        Cart instance this\n\t */\n\tuse(engine) {\n\t\tthis._storage = engine;\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Init cart by passing options.\n\t *\n\t * @param  {Object} options [description]\n\t * @return {Cart}        Cart instance this\n\t */\n\tinit(options = {}) {\n\t\tthis._options = options;\n\t\t// this._items = this._read();\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Returns plain cart items\n\t *\n\t * @return {Array} Cart items\n\t */\n\tget() {\n\t\treturn this._items;\n\t}\n\n\t/**\n\t * Adds an item to the cart\n\t *\n\t * @param {Object} item  Can be any object, but must have an unique id\n\t * @param {Number} count Amount of the item you want to add\n\t * @return {Cart}        Cart instance this\n\t */\n\tadd(item, count = 1) {\n\t\tif (this._contains(item)) {\n\t\t\tconst index = this._index(item);\n\t\t\tthis._items[index].count += count;\n\t\t} else {\n\t\t\tthis._items.push({item, count});\n\t\t}\n\t\t// this._save(this._items);\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Removes an item from the cart\n\t *\n\t * @param  {Object} item An object already added to the cart\n\t * @return {Cart}        Cart instance this\n\t */\n\tremove(item) {\n\t\tif (this._contains(item)) {\n\t\t\tconst index = this._index(item);\n\t\t\tthis._items.splice(index, 1);\n\t\t}\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Empties the cart\n\t *\n\t * @return {Cart}        Cart instance this\n\t */\n\tclear() {\n\t\tthis._items = [];\n\n\t\treturn this;\n\t}\n\n\t/**\n\t * Checks if an item exists in the carts\n\t *\n\t * @param  {Objext} item\n\t * @return {Boolean}\n\t * @private\n\t */\n\t_contains(item) {\n\t\tlet contains = false;\n\t\tconst uniqueId = this._options['uniqueId'];\n\t\tfor (let i = 0; i < this._items.length; i++) {\n\t\t\tif (this._items[i].item[uniqueId] === item[uniqueId]) {\n\t\t\t\tcontains = true;\n\t\t\t}\n\t\t}\n\n\t\treturn contains;\n\t}\n\n\t/**\n\t * Returns the index of an item in the cart\n\t *\n\t * @param  {Object} item\n\t * @return {Integer}\n\t * @private\n\t */\n\t_index(item) {\n\t\tlet index = 0;\n\t\tconst uniqueId = this._options['uniqueId'];\n\t\tfor (let i = 0; i < this._items.length; i++) {\n\t\t\tif (this._items[i].item[uniqueId] === item[uniqueId]) {\n\t\t\t\tindex = i;\n\t\t\t}\n\t\t}\n\n\t\treturn index;\n\t}\n\n\t/**\n\t * Returns saved items\n\t *\n\t * @return {Array} Saved items\n\t * @private\n\t */\n\t_read() {\n\t\tif (typeof this._storage !== 'undefined') {\n\t\t\treturn this._storage.read('cart');\n\t\t}\n\t}\n\n\t/**\n\t * Saves items\n\t *\n\t * @private\n\t */\n\t_save() {\n\t\tif (typeof this._storage !== 'undefined') {\n\t\t\treturn this._storage.save('cart', this.items);\n\t\t}\n\t}\n\n}\n\nexport default Cart;\n"
+  },
+  {
+    "__docId__": 5,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Cart",
+    "memberof": "app/components/cart/src/cart.js",
+    "longname": "app/components/cart/src/cart.js~Cart",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/cart.js",
+    "importStyle": "Cart",
+    "description": "Handles objects and provides simple cart interface.\nUse it together with storage enginges to create persistancy",
+    "lineNumber": 7,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false
+  },
+  {
+    "__docId__": 6,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#constructor",
+    "access": null,
+    "description": "",
+    "lineNumber": 12,
+    "unknown": [
+      {
+        "tagName": "@constructor",
+        "tagValue": ""
+      }
+    ],
+    "params": [],
+    "generator": false
+  },
+  {
+    "__docId__": 7,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_items",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_items",
+    "access": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_options",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_options",
+    "access": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 9,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_storage",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_storage",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "use",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#use",
+    "access": null,
+    "description": "Set storage engine",
+    "lineNumber": 24,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Storage"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "engine",
+        "description": "Set storage enginge for use of cookie, localstorage, ..."
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cart"
+      ],
+      "spread": false,
+      "description": "Cart instance this"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 11,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_storage",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_storage",
+    "access": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "init",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#init",
+    "access": null,
+    "description": "Init cart by passing options.",
+    "lineNumber": 36,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": "[description]"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cart"
+      ],
+      "spread": false,
+      "description": "Cart instance this"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 13,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_options",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_options",
+    "access": null,
+    "description": null,
+    "lineNumber": 37,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "get",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#get",
+    "access": null,
+    "description": "Returns plain cart items",
+    "lineNumber": 48,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": "Cart items"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "add",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#add",
+    "access": null,
+    "description": "Adds an item to the cart",
+    "lineNumber": 59,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": "Can be any object, but must have an unique id"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "count",
+        "description": "Amount of the item you want to add"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cart"
+      ],
+      "spread": false,
+      "description": "Cart instance this"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "remove",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#remove",
+    "access": null,
+    "description": "Removes an item from the cart",
+    "lineNumber": 77,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": "An object already added to the cart"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cart"
+      ],
+      "spread": false,
+      "description": "Cart instance this"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "clear",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#clear",
+    "access": null,
+    "description": "Empties the cart",
+    "lineNumber": 91,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Cart"
+      ],
+      "spread": false,
+      "description": "Cart instance this"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 18,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "_items",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_items",
+    "access": null,
+    "description": null,
+    "lineNumber": 92,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_contains",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_contains",
+    "access": "private",
+    "description": "Checks if an item exists in the carts",
+    "lineNumber": 104,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Objext"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Boolean"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_index",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_index",
+    "access": "private",
+    "description": "Returns the index of an item in the cart",
+    "lineNumber": 123,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "item",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Integer"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_read",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_read",
+    "access": "private",
+    "description": "Returns saved items",
+    "lineNumber": 141,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Array"
+      ],
+      "spread": false,
+      "description": "Saved items"
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "_save",
+    "memberof": "app/components/cart/src/cart.js~Cart",
+    "longname": "app/components/cart/src/cart.js~Cart#_save",
+    "access": "private",
+    "description": "Saves items",
+    "lineNumber": 152,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 23,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "app/components/cart/src/storage/storage-cookie.js",
+    "memberof": null,
+    "longname": "app/components/cart/src/storage/storage-cookie.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import StorageInterface from './storage-interface';\n\n/**\n * @extends {Storage}\n */\nclass StorageCookie extends StorageInterface {\n\n\t/**\n\t * Reads a cookie key\n\t *\n\t * @param  {String} key Identifier\n\t * @return {Promise}\n\t */\n\tread(key) {\n\t\tconst that = this;\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\tconst cookies = that.all();\n\n\t\t\tif (cookies) {\n\t\t\t\tconst json = cookies[key];\n\t\t\t\tconst object = JSON.parse(json);\n\t\t\t\tfulfill(object);\n\t\t\t} else {\n\t\t\t\treject();\n\t\t\t}\n\t\t});\n\n\t\treturn promise;\n\t}\n\n\t/**\n\t * Saves a cookie\n\t *\n\t * @param  {String} key Identifier\n\t * @param  {Object} object Data to save\n\t * @param  {Object} options\n\t * @return {Promise}\n\t */\n\tsave(key, object, options = {}) {\n\t\tconst json = JSON.stringify(object);\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\ttry {\n\t\t\t\tlet str = `${this.encode(key)}=${this.encode(json)}`;\n\n\t\t\t\tif (object === null) {\n\t\t\t\t\toptions.expiry = -1;\n\t\t\t\t}\n\n\t\t\t\tif (options.expiry && !options.expires) {\n\t\t\t\t\toptions.expires = new Date(+new Date() + options.expiry);\n\t\t\t\t}\n\n\t\t\t\tif (options.path) {\n\t\t\t\t\tstr += `; path=${options.path}`;\n\t\t\t\t}\n\n\t\t\t\tif (options.domain) {\n\t\t\t\t\tstr += `; domain=${options.domain}`;\n\t\t\t\t}\n\n\t\t\t\tif (options.expires) {\n\t\t\t\t\tstr += `; expires=${options.expires.toUTCString()}`;\n\t\t\t\t}\n\n\t\t\t\tif (options.secure) {\n\t\t\t\t\tstr += '; secure';\n\t\t\t\t}\n\n\t\t\t\tdocument.cookie = str;\n\t\t\t\tfulfill();\n\t\t\t} catch (error) {\n\t\t\t\treject(error);\n\t\t\t}\n\t\t});\n\n\t\treturn promise;\n\t}\n\n\t/**\n\t * Return complete cookie as object\n\t *\n\t * @return {Object}\n\t */\n\tall() {\n\t\treturn this.parse(document.cookie);\n\t}\n\n\t/**\n\t * Parses cookie\n\t *\n\t * @param  {String} str\n\t * @return {Object}\n\t */\n\tparse(str) {\n\t\tconst obj = {};\n\t\tconst pairs = str.split(/ *; */);\n\t\tlet pair = null;\n\n\t\tif (pairs[0] === '') {\n\t\t\treturn obj;\n\t\t}\n\n\t\tfor (let i = 0; i < pairs.length; ++i) {\n\t\t\tpair = pairs[i].split('=');\n\t\t\tobj[this.decode(pair[0])] = this.decode(pair[1]);\n\t\t}\n\n\t\treturn obj;\n\t}\n\n\t/**\n\t * Url encodes string\n\t *\n\t * @param  {String} value\n\t * @return {String|null}\n\t */\n\tencode(value) {\n\t\ttry {\n\t\t\treturn encodeURIComponent(value);\n\t\t} catch (e) {\n\t\t\treturn null;\n\t\t}\n\t}\n\n\t/**\n\t * Url encodes string\n\t *\n\t * @param  {String} value\n\t * @return {String|null}\n\t */\n\tdecode(value) {\n\t\ttry {\n\t\t\treturn decodeURIComponent(value);\n\t\t} catch (e) {\n\t\t\treturn null;\n\t\t}\n\t}\n}\n\nexport default new StorageCookie();"
+  },
+  {
+    "__docId__": 24,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "StorageCookie",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~StorageCookie",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/storage/storage-cookie.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 6,
+    "pseudoExport": true,
+    "interface": false,
+    "extends": [
+      "Storage"
+    ]
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "read",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js~StorageCookie",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~StorageCookie#read",
+    "access": null,
+    "description": "Reads a cookie key",
+    "lineNumber": 14,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "Identifier"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "save",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js~StorageCookie",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~StorageCookie#save",
+    "access": null,
+    "description": "Saves a cookie",
+    "lineNumber": 39,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "Identifier"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "object",
+        "description": "Data to save"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "options",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "all",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js~StorageCookie",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~StorageCookie#all",
+    "access": null,
+    "description": "Return complete cookie as object",
+    "lineNumber": 84,
+    "params": [],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "parse",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js~StorageCookie",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~StorageCookie#parse",
+    "access": null,
+    "description": "Parses cookie",
+    "lineNumber": 94,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "str",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Object"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "encode",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js~StorageCookie",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~StorageCookie#encode",
+    "access": null,
+    "description": "Url encodes string",
+    "lineNumber": 117,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String",
+        "null"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 30,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "decode",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js~StorageCookie",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~StorageCookie#decode",
+    "access": null,
+    "description": "Url encodes string",
+    "lineNumber": 131,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "value",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "String",
+        "null"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 31,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "storageCookie",
+    "memberof": "app/components/cart/src/storage/storage-cookie.js",
+    "longname": "app/components/cart/src/storage/storage-cookie.js~storageCookie",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/storage/storage-cookie.js",
+    "importStyle": "storageCookie",
+    "description": null,
+    "lineNumber": 140,
+    "undocument": true,
+    "type": {
+      "types": [
+        "app/components/cart/src/storage/storage-cookie.js~StorageCookie"
+      ]
+    }
+  },
+  {
+    "__docId__": 32,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "app/components/cart/src/storage/storage-interface.js",
+    "memberof": null,
+    "longname": "app/components/cart/src/storage/storage-interface.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 6,
+    "content": "/**\n * Storage interface\n *\n * @interface\n */\nclass Storage {\n\n\t/**\n\t * Returns a saved string\n\t */\n\tread(key) {}\n\n\t/**\n\t * Saves string\n\t *\n\t * @param {String} key   Identifier of the saved object\n\t * @param {Object} object Object to be saved serialized\n\t */\n\tsave(key, object = {}) {}\n\n}\n\nexport default Storage;\n"
+  },
+  {
+    "__docId__": 33,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Storage",
+    "memberof": "app/components/cart/src/storage/storage-interface.js",
+    "longname": "app/components/cart/src/storage/storage-interface.js~Storage",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/storage/storage-interface.js",
+    "importStyle": "Storage",
+    "description": "Storage interface",
+    "lineNumber": 6,
+    "interface": true
+  },
+  {
+    "__docId__": 34,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "read",
+    "memberof": "app/components/cart/src/storage/storage-interface.js~Storage",
+    "longname": "app/components/cart/src/storage/storage-interface.js~Storage#read",
+    "access": null,
+    "description": "Returns a saved string",
+    "lineNumber": 11,
+    "params": [
+      {
+        "name": "key",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 35,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "save",
+    "memberof": "app/components/cart/src/storage/storage-interface.js~Storage",
+    "longname": "app/components/cart/src/storage/storage-interface.js~Storage#save",
+    "access": null,
+    "description": "Saves string",
+    "lineNumber": 19,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "Identifier of the saved object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "object",
+        "description": "Object to be saved serialized"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 36,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "app/components/cart/src/storage/storage-localstorage.js",
+    "memberof": null,
+    "longname": "app/components/cart/src/storage/storage-localstorage.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "import StorageInterface from './storage-interface';\n\n/**\n * @extends {Storage}\n * @class\n */\nclass StorageLocalStorage extends StorageInterface {\n\n\t/**\n\t * Reads a object from Local Storage\n\t *\n\t * @param  {String} key Identifier\n\t * @return {Promise}\n\t */\n\tread(key) {\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\tconst json = localStorage.getItem(key);\n\t\t\tconst object = JSON.parse(json);\n\t\t\tfulfill(object);\n\t\t});\n\t\treturn promise;\n\t}\n\n\t/**\n\t * Saves a object to local storage\n\t *\n\t * @param  {String} key Identifier\n\t * @param  {Object} object data to save\n\t * @return {Promise}\n\t */\n\tsave(key, object) {\n\t\tconst json = JSON.stringify(object);\n\t\tconst that = this;\n\t\tconst promise = new Promise((fulfill, reject) => {\n\t\t\ttry {\n\t\t\t\tlocalStorage.setItem(key, json);\n\t\t\t\tfulfill(that);\n\t\t\t} catch (error) {\n\t\t\t\treject(error);\n\t\t\t}\n\t\t});\n\t\treturn promise;\n\t}\n\n\t// _available(type) {\n\t// if(typeof(Storage) !== \"undefined\") {\n    // Code for localStorage/sessionStorage.\n\t// } else {\n\t//     // Sorry! No Web Storage support..\n\t// }\n\t// \ttry {\n\t// \t\tvar storage = window[type],\n\t// \t\t\tx = '__storage_test__';\n\t// \t\tstorage.setItem(x, x);\n\t// \t\tstorage.removeItem(x);\n\t// \t\treturn true;\n\t// \t}\n\t// \tcatch(e) {\n\t// \t\treturn false;\n\t// \t}\n\t// }\n}\n\nexport default new StorageLocalStorage();\n\n"
+  },
+  {
+    "__docId__": 37,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "StorageLocalStorage",
+    "memberof": "app/components/cart/src/storage/storage-localstorage.js",
+    "longname": "app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/storage/storage-localstorage.js",
+    "importStyle": null,
+    "description": "",
+    "lineNumber": 7,
+    "pseudoExport": true,
+    "unknown": [
+      {
+        "tagName": "@class",
+        "tagValue": ""
+      }
+    ],
+    "interface": false,
+    "extends": [
+      "Storage"
+    ]
+  },
+  {
+    "__docId__": 38,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "read",
+    "memberof": "app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage",
+    "longname": "app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage#read",
+    "access": null,
+    "description": "Reads a object from Local Storage",
+    "lineNumber": 15,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "Identifier"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 39,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "save",
+    "memberof": "app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage",
+    "longname": "app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage#save",
+    "access": null,
+    "description": "Saves a object to local storage",
+    "lineNumber": 31,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "String"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "Identifier"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "object",
+        "description": "data to save"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Promise"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 40,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "storageLocalStorage",
+    "memberof": "app/components/cart/src/storage/storage-localstorage.js",
+    "longname": "app/components/cart/src/storage/storage-localstorage.js~storageLocalStorage",
+    "access": null,
+    "export": true,
+    "importPath": "klassenzimmer-cart/app/components/cart/src/storage/storage-localstorage.js",
+    "importStyle": "storageLocalStorage",
+    "description": null,
+    "lineNumber": 64,
+    "undocument": true,
+    "type": {
+      "types": [
+        "app/components/cart/src/storage/storage-localstorage.js~StorageLocalStorage"
+      ]
+    }
+  },
+  {
+    "__docId__": 41,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "app/scripts/app.js",
+    "memberof": null,
+    "longname": "app/scripts/app.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 2,
+    "content": "/* esversion: 6 */\nimport 'style-loader!css-loader!!sass-loader!../styles/app.scss';\nimport '../../node_modules/bootstrap/dist/js/bootstrap';\n// import Cart from '../components/cart/src/cart';\n// import cookie from '../components/cart/src/storage/cookie';\n\n// const options = {\n// \tidentifier: 'id'\n// };\n\n// cart\n\t// .use(cookie)\n\t// .init(options);\n"
+  },
+  {
+    "__docId__": 43,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Infinity",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Infinity",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 44,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NaN",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~NaN",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 45,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "undefined",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~undefined",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 46,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "null",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~null",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 47,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 48,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "object",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~object",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 49,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 50,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "function",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~function",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 51,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 52,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "boolean",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~boolean",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 53,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Symbol",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Symbol",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 54,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Error",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Error",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 55,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "EvalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~EvalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 56,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "InternalError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~InternalError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 57,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RangeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RangeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 58,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ReferenceError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ReferenceError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 59,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "SyntaxError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~SyntaxError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 60,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "TypeError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~TypeError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 61,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "URIError",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~URIError",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 62,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 63,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "number",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~number",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 64,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Date",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Date",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 65,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "String",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~String",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 66,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "string",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~string",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 67,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "RegExp",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~RegExp",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 68,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 69,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 70,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 71,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint8ClampedArray",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint8ClampedArray",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 72,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 73,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint16Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint16Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 74,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Int32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Int32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 75,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Uint32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Uint32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 76,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float32Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float32Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 77,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Float64Array",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Float64Array",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 78,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Map",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Map",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 79,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Set",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Set",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 80,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakMap",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakMap",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 81,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "WeakSet",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~WeakSet",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 82,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "ArrayBuffer",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~ArrayBuffer",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 83,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DataView",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~DataView",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 84,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "JSON",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~JSON",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 85,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Promise",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Promise",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 86,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Generator",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Generator",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 87,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "GeneratorFunction",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~GeneratorFunction",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 88,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Reflect",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Reflect",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 89,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Proxy",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
+    "memberof": "BuiltinExternal/ECMAScriptExternal.js",
+    "longname": "BuiltinExternal/ECMAScriptExternal.js~Proxy",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 91,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "CanvasRenderingContext2D",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~CanvasRenderingContext2D",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 92,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "DocumentFragment",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~DocumentFragment",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 93,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Element",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Element",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 94,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Event",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Event",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 95,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "Node",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~Node",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 96,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "NodeList",
+    "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~NodeList",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 97,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "XMLHttpRequest",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~XMLHttpRequest",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  },
+  {
+    "__docId__": 98,
+    "kind": "external",
+    "static": true,
+    "variation": null,
+    "name": "AudioContext",
+    "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
+    "memberof": "BuiltinExternal/WebAPIExternal.js",
+    "longname": "BuiltinExternal/WebAPIExternal.js~AudioContext",
+    "access": null,
+    "description": "",
+    "builtinExternal": true
+  }
+]

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>cart.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cart.html">Cart</a><ul class='methods'><li data-type='method'><a href="Cart.html#add">add</a></li><li data-type='method'><a href="Cart.html#clear">clear</a></li><li data-type='method'><a href="Cart.html#get">get</a></li><li data-type='method'><a href="Cart.html#init">init</a></li><li data-type='method'><a href="Cart.html#remove">remove</a></li><li data-type='method'><a href="Cart.html#use">use</a></li></ul></li><li><a href="CartSorted.html">CartSorted</a><ul class='methods'><li data-type='method'><a href="CartSorted.html#add">add</a></li></ul></li><li><a href="StorageCookie.html">StorageCookie</a><ul class='methods'><li data-type='method'><a href="StorageCookie.html#all">all</a></li><li data-type='method'><a href="StorageCookie.html#decode">decode</a></li><li data-type='method'><a href="StorageCookie.html#encode">encode</a></li><li data-type='method'><a href="StorageCookie.html#parse">parse</a></li><li data-type='method'><a href="StorageCookie.html#read">read</a></li><li data-type='method'><a href="StorageCookie.html#save">save</a></li></ul></li><li><a href="StorageLocalStorage.html">StorageLocalStorage</a><ul class='methods'><li data-type='method'><a href="StorageLocalStorage.html#read">read</a></li><li data-type='method'><a href="StorageLocalStorage.html#save">save</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="Storage.html">Storage</a><ul class='methods'><li data-type='method'><a href="Storage.html#read">read</a></li><li data-type='method'><a href="Storage.html#save">save</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">cart.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Handles objects and provides simple cart interface.
+ * Use it together with storage enginges to create persistancy
+ *
+ * @class
+ */
+class Cart {
+
+	/**
+	 * @constructor
+	 */
+	constructor() {
+		this._items = [];
+		this._options = [];
+		this._storage = undefined;
+	}
+
+	/**
+	 * Set storage engine
+	 *
+	 * @param  {Storage} engine Set storage enginge for use of cookie, localstorage, ...
+	 * @return {Cart}        Cart instance this
+	 */
+	use(engine) {
+		this._storage = engine;
+
+		return this;
+	}
+
+	/**
+	 * Init cart by passing options.
+	 *
+	 * @param  {Object} options [description]
+	 * @return {Cart}        Cart instance this
+	 */
+	init(options = {}) {
+		this._options = options;
+		// this._items = this._read();
+
+		return this;
+	}
+
+	/**
+	 * Returns plain cart items
+	 *
+	 * @return {Array} Cart items
+	 */
+	get() {
+		return this._items;
+	}
+
+	/**
+	 * Adds an item to the cart
+	 *
+	 * @param {Object} item  Can be any object, but must have an unique id
+	 * @param {Number} count Amount of the item you want to add
+	 * @return {Cart}        Cart instance this
+	 */
+	add(item, count = 1) {
+		if (this._contains(item)) {
+			const index = this._index(item);
+			this._items[index].count += count;
+		} else {
+			this._items.push({item, count});
+		}
+		// this._save(this._items);
+
+		return this;
+	}
+
+	/**
+	 * Removes an item from the cart
+	 *
+	 * @param  {Object} item An object already added to the cart
+	 * @return {Cart}        Cart instance this
+	 */
+	remove(item) {
+		if (this._contains(item)) {
+			const index = this._index(item);
+			this._items.splice(index, 1);
+		}
+
+		return this;
+	}
+
+	/**
+	 * Empties the cart
+	 *
+	 * @return {Cart}        Cart instance this
+	 */
+	clear() {
+		this._items = [];
+
+		return this;
+	}
+
+	/**
+	 * Checks if an item exists in the carts
+	 *
+	 * @param  {Objext} item
+	 * @return {Boolean}
+	 * @private
+	 */
+	_contains(item) {
+		let contains = false;
+		const uniqueId = this._options['uniqueId'];
+		for (let i = 0; i &lt; this._items.length; i++) {
+			if (this._items[i].item[uniqueId] === item[uniqueId]) {
+				contains = true;
+			}
+		}
+
+		return contains;
+	}
+
+	/**
+	 * Returns the index of an item in the cart
+	 *
+	 * @param  {Object} item
+	 * @return {Integer}
+	 * @private
+	 */
+	_index(item) {
+		let index = 0;
+		const uniqueId = this._options['uniqueId'];
+		for (let i = 0; i &lt; this._items.length; i++) {
+			if (this._items[i].item[uniqueId] === item[uniqueId]) {
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	/**
+	 * Returns saved items
+	 *
+	 * @return {Array} Saved items
+	 * @private
+	 */
+	_read() {
+		if (typeof this._storage !== 'undefined') {
+			return this._storage.read('cart');
+		}
+	}
+
+	/**
+	 * Saves items
+	 *
+	 * @private
+	 */
+	_save() {
+		if (typeof this._storage !== 'undefined') {
+			return this._storage.save('cart', this.items);
+		}
+	}
+
+}
+
+export default Cart;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Mar 08 2016 23:10:24 GMT+0100 (CET) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

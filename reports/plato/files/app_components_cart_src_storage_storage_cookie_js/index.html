@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - app/components/cart/src/storage/storage-cookie.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>app/components/cart/src/storage/storage-cookie.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">100.00</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">140</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">0.00</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">0.00</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">import StorageInterface from &#039;./storage-interface&#039;;
+
+/**
+ * @extends {Storage}
+ */
+class StorageCookie extends StorageInterface {
+
+	/**
+	 * Reads a cookie key
+	 *
+	 * @param  {String} key Identifier
+	 * @return {Promise}
+	 */
+	read(key) {
+		const that = this;
+		const promise = new Promise((fulfill, reject) =&gt; {
+			const cookies = that.all();
+
+			if (cookies) {
+				const json = cookies[key];
+				const object = JSON.parse(json);
+				fulfill(object);
+			} else {
+				reject();
+			}
+		});
+
+		return promise;
+	}
+
+	/**
+	 * Saves a cookie
+	 *
+	 * @param  {String} key Identifier
+	 * @param  {Object} object Data to save
+	 * @param  {Object} options
+	 * @return {Promise}
+	 */
+	save(key, object, options = {}) {
+		const json = JSON.stringify(object);
+		const promise = new Promise((fulfill, reject) =&gt; {
+			try {
+				let str = `${this.encode(key)}=${this.encode(json)}`;
+
+				if (object === null) {
+					options.expiry = -1;
+				}
+
+				if (options.expiry &amp;&amp; !options.expires) {
+					options.expires = new Date(+new Date() + options.expiry);
+				}
+
+				if (options.path) {
+					str += `; path=${options.path}`;
+				}
+
+				if (options.domain) {
+					str += `; domain=${options.domain}`;
+				}
+
+				if (options.expires) {
+					str += `; expires=${options.expires.toUTCString()}`;
+				}
+
+				if (options.secure) {
+					str += &#039;; secure&#039;;
+				}
+
+				document.cookie = str;
+				fulfill();
+			} catch (error) {
+				reject(error);
+			}
+		});
+
+		return promise;
+	}
+
+	/**
+	 * Return complete cookie as object
+	 *
+	 * @return {Object}
+	 */
+	all() {
+		return this.parse(document.cookie);
+	}
+
+	/**
+	 * Parses cookie
+	 *
+	 * @param  {String} str
+	 * @return {Object}
+	 */
+	parse(str) {
+		const obj = {};
+		const pairs = str.split(/ *; */);
+		let pair = null;
+
+		if (pairs[0] === &#039;&#039;) {
+			return obj;
+		}
+
+		for (let i = 0; i &lt; pairs.length; ++i) {
+			pair = pairs[i].split(&#039;=&#039;);
+			obj[this.decode(pair[0])] = this.decode(pair[1]);
+		}
+
+		return obj;
+	}
+
+	/**
+	 * Url encodes string
+	 *
+	 * @param  {String} value
+	 * @return {String|null}
+	 */
+	encode(value) {
+		try {
+			return encodeURIComponent(value);
+		} catch (e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Url encodes string
+	 *
+	 * @param  {String} value
+	 * @return {String|null}
+	 */
+	decode(value) {
+		try {
+			return decodeURIComponent(value);
+		} catch (e) {
+			return null;
+		}
+	}
+}
+
+export default new StorageCookie();</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

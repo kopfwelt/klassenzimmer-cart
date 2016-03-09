@@ -1,0 +1,36 @@
+{
+  "coverage": "92.3%",
+  "expectCount": 26,
+  "actualCount": 24,
+  "files": {
+    "app/components/cart/src/cart.js": {
+      "expectCount": 8,
+      "actualCount": 8,
+      "undocumentLines": []
+    },
+    "app/components/cart/src/cart-sorted.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "app/components/cart/src/storage/storage-interface.js": {
+      "expectCount": 3,
+      "actualCount": 3,
+      "undocumentLines": []
+    },
+    "app/components/cart/src/storage/storage-cookie.js": {
+      "expectCount": 8,
+      "actualCount": 7,
+      "undocumentLines": [
+        140
+      ]
+    },
+    "app/components/cart/src/storage/storage-localstorage.js": {
+      "expectCount": 4,
+      "actualCount": 3,
+      "undocumentLines": [
+        64
+      ]
+    }
+  }
+}

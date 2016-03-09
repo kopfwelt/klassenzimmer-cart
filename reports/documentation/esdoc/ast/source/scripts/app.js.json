@@ -1,0 +1,424 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [],
+      "source": {
+        "type": "Literal",
+        "value": "style-loader!css-loader!!sass-loader!../styles/app.scss",
+        "raw": "'style-loader!css-loader!!sass-loader!../styles/app.scss'",
+        "range": [
+          26,
+          83
+        ],
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 7
+          },
+          "end": {
+            "line": 2,
+            "column": 64
+          }
+        }
+      },
+      "range": [
+        19,
+        84
+      ],
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 65
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": " esversion: 6 ",
+          "range": [
+            0,
+            18
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 18
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "ImportDeclaration",
+      "specifiers": [],
+      "source": {
+        "type": "Literal",
+        "value": "../../node_modules/bootstrap/dist/js/bootstrap",
+        "raw": "'../../node_modules/bootstrap/dist/js/bootstrap'",
+        "range": [
+          92,
+          140
+        ],
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 7
+          },
+          "end": {
+            "line": 3,
+            "column": 55
+          }
+        }
+      },
+      "range": [
+        85,
+        141
+      ],
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 56
+        }
+      },
+      "trailingComments": [
+        {
+          "type": "Line",
+          "value": " import Cart from '../components/cart/src/cart';",
+          "range": [
+            142,
+            192
+          ],
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 0
+            },
+            "end": {
+              "line": 4,
+              "column": 50
+            }
+          }
+        },
+        {
+          "type": "Line",
+          "value": " import cookie from '../components/cart/src/storage/cookie';",
+          "range": [
+            193,
+            255
+          ],
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 0
+            },
+            "end": {
+              "line": 5,
+              "column": 62
+            }
+          }
+        },
+        {
+          "type": "Line",
+          "value": " const options = {",
+          "range": [
+            257,
+            277
+          ],
+          "loc": {
+            "start": {
+              "line": 7,
+              "column": 0
+            },
+            "end": {
+              "line": 7,
+              "column": 20
+            }
+          }
+        },
+        {
+          "type": "Line",
+          "value": " \tidentifier: 'id'",
+          "range": [
+            278,
+            298
+          ],
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 0
+            },
+            "end": {
+              "line": 8,
+              "column": 20
+            }
+          }
+        },
+        {
+          "type": "Line",
+          "value": " };",
+          "range": [
+            299,
+            304
+          ],
+          "loc": {
+            "start": {
+              "line": 9,
+              "column": 0
+            },
+            "end": {
+              "line": 9,
+              "column": 5
+            }
+          }
+        },
+        {
+          "type": "Line",
+          "value": " cart",
+          "range": [
+            306,
+            313
+          ],
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 0
+            },
+            "end": {
+              "line": 11,
+              "column": 7
+            }
+          }
+        },
+        {
+          "type": "Line",
+          "value": " .use(cookie)",
+          "range": [
+            315,
+            330
+          ],
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 1
+            },
+            "end": {
+              "line": 12,
+              "column": 16
+            }
+          }
+        },
+        {
+          "type": "Line",
+          "value": " .init(options);",
+          "range": [
+            332,
+            350
+          ],
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 1
+            },
+            "end": {
+              "line": 13,
+              "column": 19
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    19,
+    141
+  ],
+  "loc": {
+    "start": {
+      "line": 2,
+      "column": 0
+    },
+    "end": {
+      "line": 3,
+      "column": 56
+    }
+  },
+  "comments": [
+    {
+      "type": "Block",
+      "value": " esversion: 6 ",
+      "range": [
+        0,
+        18
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 18
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " import Cart from '../components/cart/src/cart';",
+      "range": [
+        142,
+        192
+      ],
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 0
+        },
+        "end": {
+          "line": 4,
+          "column": 50
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " import cookie from '../components/cart/src/storage/cookie';",
+      "range": [
+        193,
+        255
+      ],
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 0
+        },
+        "end": {
+          "line": 5,
+          "column": 62
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " const options = {",
+      "range": [
+        257,
+        277
+      ],
+      "loc": {
+        "start": {
+          "line": 7,
+          "column": 0
+        },
+        "end": {
+          "line": 7,
+          "column": 20
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " \tidentifier: 'id'",
+      "range": [
+        278,
+        298
+      ],
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 0
+        },
+        "end": {
+          "line": 8,
+          "column": 20
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " };",
+      "range": [
+        299,
+        304
+      ],
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 0
+        },
+        "end": {
+          "line": 9,
+          "column": 5
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " cart",
+      "range": [
+        306,
+        313
+      ],
+      "loc": {
+        "start": {
+          "line": 11,
+          "column": 0
+        },
+        "end": {
+          "line": 11,
+          "column": 7
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " .use(cookie)",
+      "range": [
+        315,
+        330
+      ],
+      "loc": {
+        "start": {
+          "line": 12,
+          "column": 1
+        },
+        "end": {
+          "line": 12,
+          "column": 16
+        }
+      }
+    },
+    {
+      "type": "Line",
+      "value": " .init(options);",
+      "range": [
+        332,
+        350
+      ],
+      "loc": {
+        "start": {
+          "line": 13,
+          "column": 1
+        },
+        "end": {
+          "line": 13,
+          "column": 19
+        }
+      }
+    }
+  ]
+}
