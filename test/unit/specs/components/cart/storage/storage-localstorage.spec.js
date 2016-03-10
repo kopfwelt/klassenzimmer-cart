@@ -3,7 +3,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import localstorage from '../../../../../../app/components/cart/src/storage/storage-localstorage';
+import localstorage from '../../../../../../app/components/storage/src/storage-localstorage';
 
 describe('StorageLocalStorage', () => {
 	describe('save', () => {

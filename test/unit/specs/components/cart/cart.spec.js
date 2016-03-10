@@ -4,7 +4,7 @@ import chai from 'chai';
 const expect = chai.expect;
 
 import Cart from '../../../../../app/components/cart/src/cart';
-import storage from '../../../../../app/components/cart/src/storage/storage';
+import storage from '../../../../../app/components/storage/src/storage';
 
 describe('Cart', () => {
 	let cart = null;

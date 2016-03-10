@@ -3,7 +3,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import cookie from '../../../../../../app/components/cart/src/storage/storage-cookie';
+import cookie from '../../../../../../app/components/storage/src/storage-cookie';
 
 describe('StorageCookie', () => {
 	describe('read', () => {
