@@ -4,10 +4,8 @@
  * Handles objects and provides simple cart interface.
  * Use it together with storage enginges to create persistancy
  *
- * @class
+ * @module
  */
-// class Cart extends EventEmitter {
-
 function cart() {
 	let _items = [];
 	let _options = [];
